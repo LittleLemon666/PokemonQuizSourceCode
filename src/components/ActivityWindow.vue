@@ -32,31 +32,56 @@
                             min-width="auto"
                         >
                             <template v-slot:activator="{ on, attrs }">
-                            <v-text-field
-                                v-model="begin_date"
-                                append-icon="event"
-                                @click:append="on.click"
-                                readonly
-                                v-bind="attrs"
-                                v-on="on"
-                            ></v-text-field>
+                                <v-text-field
+                                    v-model="begin_date"
+                                    append-icon="event"
+                                    @click:append="on.click"
+                                    readonly
+                                    v-bind="attrs"
+                                    v-on="on"
+                                ></v-text-field>
                             </template>
-                            <v-date-picker
-                                v-model="begin_date"
-                                no-title
-                                scrollable
-                                value="yyyy/MM/dd"
-                            >
-                                <v-layout justify-end row1>
-                                    <v-btn
-                                        text
-                                        color="primary"
-                                        @click="$refs.menu_visible1.save(begin_date)"
-                                    >
-                                        confirm
-                                    </v-btn>
-                                </v-layout>
-                            </v-date-picker>
+                            <v-tabs
+                                v-model="tab"
+                                align-with-title
+                                justify-end
+                                >
+                                <v-tabs-slider color="yellow"></v-tabs-slider>
+
+                                <v-tab
+                                    v-for="item in items"
+                                    :key="item"
+                                >
+                                    {{ item }}
+                                </v-tab>
+                            </v-tabs>
+                            <v-tabs-items v-model="tab">
+                                <v-tab-item>
+                                    <v-card flat>
+                                        
+                                    </v-card>
+                                </v-tab-item>
+                                <v-tab-item>
+                                    <v-card flat>
+                                        <v-date-picker
+                                            v-model="begin_date"
+                                            no-title
+                                            scrollable
+                                            value="yyyy/MM/dd"
+                                        >
+                                            <v-layout justify-end row1>
+                                                <v-btn
+                                                    text
+                                                    color="primary"
+                                                    @click="$refs.menu_visible1.save(begin_date)"
+                                                >
+                                                    confirm
+                                                </v-btn>
+                                            </v-layout>
+                                        </v-date-picker>
+                                    </v-card>
+                                </v-tab-item>
+                            </v-tabs-items>
                         </v-menu>
                     </v-col>
                     <v-col cols="1">
@@ -82,22 +107,47 @@
                                     v-on="on"
                                 ></v-text-field>
                             </template>
-                            <v-date-picker
-                                v-model="end_date"
-                                no-title
-                                scrollable
-                                value="yyyy/MM/dd"
-                            >
-                                <v-layout justify-end row2>
-                                    <v-btn
-                                        text
-                                        color="primary"
-                                        @click="$refs.menu_visible2.save(end_date)"
-                                    >
-                                        confirm
-                                    </v-btn>
-                                </v-layout>
-                            </v-date-picker>
+                            <v-tabs
+                                v-model="tab"
+                                align-with-title
+                                justify-end
+                                >
+                                <v-tabs-slider color="yellow"></v-tabs-slider>
+
+                                <v-tab
+                                    v-for="item in items"
+                                    :key="item"
+                                >
+                                    {{ item }}
+                                </v-tab>
+                            </v-tabs>
+                            <v-tabs-items v-model="tab">
+                                <v-tab-item>
+                                    <v-card flat>
+                                        
+                                    </v-card>
+                                </v-tab-item>
+                                <v-tab-item>
+                                    <v-card flat>
+                                        <v-date-picker
+                                            v-model="end_date"
+                                            no-title
+                                            scrollable
+                                            value="yyyy/MM/dd"
+                                        >
+                                            <v-layout justify-end row2>
+                                                <v-btn
+                                                    text
+                                                    color="primary"
+                                                    @click="$refs.menu_visible2.save(end_date)"
+                                                >
+                                                    confirm
+                                                </v-btn>
+                                            </v-layout>
+                                        </v-date-picker>
+                                    </v-card>
+                                </v-tab-item>
+                            </v-tabs-items>
                         </v-menu>
                     </v-col>
                 </v-row>
@@ -199,7 +249,7 @@ export default {
             chairperson: '',
             tab: null,
             items: [
-                'Date', 'Month',
+                'Day', 'Month',
             ],
             text: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit',
             begin_date: new Date(Date.now()).toISOString().substr(0, 10),
@@ -236,5 +286,9 @@ export default {
     ;
     border: 1px solid #eaeaea;
     box-shadow: 0 0 25px #cac6c6;
+}
+
+.v-tab {
+    text-transform: none !important;
 }
 </style>
