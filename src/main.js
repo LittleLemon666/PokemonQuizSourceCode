@@ -7,9 +7,8 @@ import 'material-design-icons-iconfont/dist/material-design-icons.css'
 import ElementUI from 'element-ui'
 import 'element-ui/lib/theme-chalk/index.css'
 import vuetify from '@/plugins/vuetify' // path to vuetify export
-//import VuetifyDialog from 'vuetify-dialog'
-//import 'vuetify-dialog/dist/vuetify-dialog.css' 
 import Login from './components/Login.vue'
+import { mdiMagnify } from '@mdi/js'
 import Home from './components/Home.vue'
 import Signup from './components/Signup.vue'
 import Activity from './components/ActivityWindow.vue'
@@ -17,7 +16,6 @@ import DateSelect from './components/DateSelect.vue'
 
 Vue.use(ElementUI)
 Vue.config.productionTip = false
-//Vue.use(VuetifyDialog)
 
 /* eslint-disable no-new */
 new Vue({

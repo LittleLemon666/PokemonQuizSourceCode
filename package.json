@@ -14,15 +14,18 @@
     "webpack": "webpack"
   },
   "dependencies": {
+    "@mdi/js": "^6.5.95",
     "axios": "^0.24.0",
     "element-ui": "^2.15.6",
     "material-design-icons-iconfont": "^6.1.1",
+    "mdi-vue": "^3.0.12",
     "vue": "^2.5.2",
     "vue-router": "^3.0.1",
     "vuetify": "^2.6.1",
     "vuetify-dialog": "^2.0.17"
   },
   "devDependencies": {
+    "@mdi/font": "^6.5.95",
     "autoprefixer": "^7.1.2",
     "babel-core": "^6.22.1",
     "babel-helper-vue-jsx-merge-props": "^2.0.3",

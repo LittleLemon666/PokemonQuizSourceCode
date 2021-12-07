@@ -1,6 +1,6 @@
 <template>
 <!--背景圖-->
-
+<v-app>
 <div class = "note" :style = "note">
 <!--login框，表單+tab標籤頁的組合-->
     <div class = "loginFrame">
@@ -17,8 +17,10 @@
                 <el-input type = "password" v-model = "account.password" auto-complete = "off" placeholder = "Password"></el-input>
             </el-form-item>
             <!--el-checkbox v-model = "checked" checked class = "remember">記住密碼</el-checkbox-->
-            <div class = "signupFor">
-                <a @click = "signup" class = "Signup">Sign up？</a>
+            <div>
+                <v-layout justify-end row0>
+                    <a @click = "signup" class = "Signup">Sign up？</a>
+                </v-layout>
             </div>
             <el-form-item style = "width:100%;">
                 <el-button type = "primary" style = "width:100%;" @click = "login">Sign in</el-button>
@@ -26,7 +28,7 @@
         </el-form>
     </div>
 </div>
-</div>
+</v-app>
 
 </template>
 
