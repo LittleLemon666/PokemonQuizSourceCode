@@ -72,6 +72,7 @@ export default {
             this.$router.replace('/Home')  
         },
         signup() {
+            //this.$route.params.site_from = 'fromLogin'
             this.$router.replace('/Signup')  
         }
     }

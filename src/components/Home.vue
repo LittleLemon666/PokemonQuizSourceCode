@@ -1,6 +1,6 @@
 <template>
     <v-app>
-        <div class="content">
+        <div class="m-header">
             <v-layout justify-space-between rowt>
                     <div class="picture">
                         <img src="../assets/logo.jpg" class="bar_picture">
@@ -53,12 +53,12 @@
                                     </template>
                                     <v-list>
                                         <v-list-item
-                                            v-for="n in setting_items"
-                                            :key="n"
-                                            @click="() => {}"
+                                            v-for="item in setting_items"
+                                            :key="item"
+                                            @click="settingAction(item.action)"
                                         >
                                             <v-list-item-title>
-                                                {{ n }}
+                                                {{ item.title }}
                                             </v-list-item-title>
                                         </v-list-item>
                                     </v-list>
@@ -69,6 +69,17 @@
             </v-layout>
             <component :is="currentTab" keep-alive></component>
         </div>
+        <div class="m-content">
+            <v-layout justify-end rowc>
+                <v-date-picker
+                    no-title
+                    v-model="dates"
+                    :event-color="date => date[9] % 2 ? 'red' : 'yellow'"
+                    :events="functionEvents"
+                >
+                </v-date-picker>
+            </v-layout>
+        </div>
     </v-app>
 </template> 
 
@@ -77,15 +88,47 @@ export default {
     data () {
         return {
             search_text: '',
-            setting_items: ['User info', 'Sign out'],
+            setting_items: [{
+                title: 'User info',
+                action: 'user'
+            },
+            {
+                title: 'Sign out',
+                action: 'logout'
+            }],
+            arrayEvents: null,
+            dates: (new Date(Date.now() - (new Date()).getTimezoneOffset() * 60000)).toISOString().substr(0, 10),
         };
     },
+    mounted () {
+      this.arrayEvents = [...Array(6)].map(() => {
+        const day = Math.floor(Math.random() * 30)
+        const d = new Date()
+        d.setDate(day)
+        return d.toISOString().substr(0, 10)
+      })
+    },
     methods: {
-       Activity () {
+        Activity () {
            this.$router.replace('/Activity')
-       },
-       Booking() {
+        },
+        Booking() {
             this.$router.replace('/Booking')  
+        },
+        settingAction(action){
+            if (action === 'user'){
+                // to be fix
+                this.$router.replace('Signup')
+            }
+            else if (action === 'logout'){
+                this.$router.replace('/')
+            }
+        },
+        functionEvents (date) {
+            const [,, day] = date.split('-')
+            if ([12, 17, 28].includes(parseInt(day, 10))) return true
+            if ([1, 19, 22].includes(parseInt(day, 10))) return ['red', '#00f']
+            return false
         },
    }
 }</script>
