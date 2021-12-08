@@ -205,7 +205,7 @@
                             <v-btn
                                 color="green darken-1"
                                 text
-                                @click="dialog = false"
+                                @click="cancel"
                             >
                                 Yes
                             </v-btn>
@@ -266,6 +266,7 @@ export default {
            this.$router.replace('/Login')
        },
        cancel () {
+           this.dialog = false,
            this.$router.replace('/Login')
        }
    }

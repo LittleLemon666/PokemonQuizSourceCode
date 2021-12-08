@@ -3,7 +3,6 @@
 import Vue from 'vue'
 import App from './App'
 import router from './router'
-import 'material-design-icons-iconfont/dist/material-design-icons.css'
 import ElementUI from 'element-ui'
 import 'element-ui/lib/theme-chalk/index.css'
 import vuetify from '@/plugins/vuetify' // path to vuetify export

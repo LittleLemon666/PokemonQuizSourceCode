@@ -71,14 +71,23 @@
         </div>
         <div class="m-content">
             <v-layout justify-end rowc>
+                <v-col
+                    cols="12"
+                    rows="36"
+                    sm="6"
+                >
                 <v-date-picker
                     no-title
                     v-model="dates"
+                    input-class="datetime-picker"
+                    width="100%"
                     :event-color="date => date[9] % 2 ? 'red' : 'yellow'"
                     :events="functionEvents"
                 >
                 </v-date-picker>
+                </v-col>
             </v-layout>
+                </v-card>
         </div>
     </v-app>
 </template> 

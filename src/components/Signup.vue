@@ -25,21 +25,21 @@
                 <v-col rows="12">
                     <v-text-field label="Account"></v-text-field>
                     <v-text-field 
-                        :append-icon="show4 ? 'mdi-eye' : 'mdi-eye-off'"
+                        :append-icon="show1 ? 'mdi-eye' : 'mdi-eye-off'"
                         :rules="[rules.required, rules.min]"
-                        :type="show4 ? 'text' : 'password'"
+                        :type="show1 ? 'text' : 'password'"
                         name="input-Password"
                         label="Password"
                         hint="At least 8 characters"
                         value=""
                         v-model="password"
                         error
-                        @click:append="show2 = !show2"
+                        @click:append="show1 = !show1"
                     ></v-text-field>
                     <v-text-field 
-                        :append-icon="show4 ? 'mdi-eye' : 'mdi-eye-off'"
+                        :append-icon="show2 ? 'mdi-eye' : 'mdi-eye-off'"
                         :rules="[rules.required, rules.confirm]"
-                        :type="show4 ? 'text' : 'password'"
+                        :type="show2 ? 'text' : 'password'"
                         name="input-Confirm Password"
                         label="Confirm Password"
                         value=""
