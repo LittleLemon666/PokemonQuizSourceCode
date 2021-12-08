@@ -3,7 +3,7 @@
         <div class="m-header">
             <v-layout justify-space-between rowt>
                     <div class="picture">
-                        <img src="../assets/logo.jpg" class="bar_picture">
+                        <img @click = "Home" src="../assets/logo.jpg" class="bar_picture">
                     </div>
                     <v-card flat>
                         <v-row>
@@ -114,6 +114,9 @@ export default {
         },
         Booking() {
             this.$router.replace('/Booking')  
+        },
+        Home() {
+            this.$router.replace('/Home')  
         },
         settingAction(action){
             if (action === 'user'){
