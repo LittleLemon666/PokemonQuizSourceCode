@@ -6,15 +6,7 @@ import router from './router'
 import ElementUI from 'element-ui'
 import 'element-ui/lib/theme-chalk/index.css'
 import vuetify from '@/plugins/vuetify' // path to vuetify export
-import Login from './components/Login.vue'
-import { mdiMagnify } from '@mdi/js'
-import HomeMain from './components/HomeMain.vue'
-import Home from './components/Home.vue'
-import Signup from './components/Signup.vue'
-import ActivityWindow from './components/ActivityWindow.vue'
-import DateSelect from './components/DateSelect.vue'
-import Activity from './components/Activity.vue'
-import Booking from './components/Booking.vue'
+import 'material-design-icons-iconfont/dist/material-design-icons.css'
 
 Vue.use(ElementUI)
 Vue.config.productionTip = false

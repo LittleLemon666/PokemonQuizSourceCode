@@ -51,7 +51,7 @@ export default new Router({
     {
       path: '/activityWindow',
       name: 'ActivityWindow',
-      component: Activity
+      component: ActivityWindow
     },
     {
       path: '/dateSelect',

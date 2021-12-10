@@ -143,7 +143,7 @@ export default {
                 this.$router.replace('signup')
             }
             else if (action === 'logout'){
-                this.$router.replace('/')
+                this.$router.replace('home')
             }
         },
    }
