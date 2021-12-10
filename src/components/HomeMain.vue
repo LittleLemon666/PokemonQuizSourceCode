@@ -84,7 +84,7 @@
                                 <v-list>
                                     <v-list-item
                                         v-for="item in setting_items"
-                                        :key="item"
+                                        :key="item.title"
                                         @click="settingAction(item.action)"
                                     >
                                         <v-list-item-title>
@@ -125,11 +125,11 @@ export default {
     },
     methods: {
         HomeLogo() {
-            this.$router.replace('home')
+            this.$router.replace('home').catch(()=>{})
             this.Home()
         },
         Home() {
-            this.web_at = 'Home' 
+            this.web_at = 'Home'
         },
         Activity() {
             this.web_at = 'Activity' 
@@ -140,10 +140,12 @@ export default {
         settingAction(action){
             if (action === 'user'){
                 // to be fix
-                this.$router.replace('signup')
+                this.$router.replace('signup').catch(()=>{})
+                this.web_at = 'Home'
             }
             else if (action === 'logout'){
-                this.$router.replace('home')
+                this.$router.replace('home').catch(()=>{})
+                this.web_at = 'Home'
             }
         },
    }

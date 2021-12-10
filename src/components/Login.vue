@@ -4,11 +4,9 @@
 <div class = "note" :style = "note">
 <!--login框，表單+tab標籤頁的組合-->
     <div class = "loginFrame">
-        <el-form ref = "AccountForm" :model = "account"   rules = "rules" label-position = "left" label-width = "0px" class = "demo-ruleForm login-container">
+        <el-form ref = "AccountForm" :model = "account" :rules = "rules" label-position = "left" label-width = "0px" class = "demo-ruleForm login-container">
        <!--tab標籤-->
-            <el-tabs v-model = "activeName" @tab-click = "handleClick" class = "users">
-                <img src="../assets/logo.jpg" width="100%" height="30%">
-            </el-tabs>
+            <img src="../assets/logo.jpg" width="100%" height="30%">
 
             <el-form-item prop = "username">
                 <el-input type = "text" v-model = "account.username" auto-complete = "off" placeholder = "Acount"></el-input>
@@ -34,7 +32,7 @@
 
 <script>
 export default {
-    name: '登入',
+    name: 'Login',
     data() {
         return {
             logining : false,
@@ -67,9 +65,18 @@ export default {
         };
         
     },
+    // mounted: function() {
+    //     console.log('Starting connection to WebSocket Server');
+    //     this.connection = new WebSocket('ws://localhost:8080/pos-detail');
+
+    //     this.connection.onmessage = function(event) {
+    //         console.log('Server message : ' + event.data);
+    //     }
+    // },
     methods: {
         login() {
-            this.$router.replace('/home')  
+            this.$router.replace('/home')
+            // this.connect('ws://' + location.host + '/socket/websocket/030', { format: 'json' })
         },
         signup() {
             //this.$route.params.site_from = 'fromLogin'
