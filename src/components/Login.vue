@@ -12,9 +12,10 @@
                 <el-input type = "text" v-model = "account.username" auto-complete = "off" placeholder = "Acount"></el-input>
             </el-form-item> 
             <el-form-item prop = "password">
-                <el-input type = "password" v-model = "account.password" auto-complete = "off" placeholder = "Password"></el-input>
+                <el-input type = "password" v-model = "account.password" auto-complete = "off" placeholder = "Password" error></el-input>
             </el-form-item>
             <!--el-checkbox v-model = "checked" checked class = "remember">記住密碼</el-checkbox-->
+            <p v-show="error_msg!==''" v-text="error_msg"></p>
             <div>
                 <v-layout justify-end row0>
                     <a @click = "signup" class = "Signup">Sign up？</a>
@@ -52,16 +53,16 @@ export default {
             },
             rules: {
                 username :[
-                    {required: true, message: '請輸入賬號',trigger: 'blur'},
+                    {required: true, message: 'Type your account', trigger: 'blur'},
                     //{ validator: validaePass }
                 ],
                 password: [
-                    {required: true,message: '請輸入密碼', trigger: 'blur'},
+                    {required: true, message: 'Type your password', trigger: 'blur'},
                     //{ validator: validaePass2 }
                 ]
             },
-            checked: false
-           
+            checked: false,
+            error_msg: ''
         };
         
     },
@@ -75,9 +76,29 @@ export default {
     // },
     methods: {
         login() {
-            this.$emit('Login', this.account.username, this.account.password)
-            this.$router.replace('/home')
+            this.$emit('Login', this, this.account.username, this.account.password)
+            // this.loginResponse(3) // for test
             // this.connect('ws://' + location.host + '/socket/websocket/030', { format: 'json' })
+        },
+        loginResponse(state) {
+            console.log(state);
+            this.error_msg = '';
+            if (state === 0) {
+                console.log('ok');
+                this.$router.replace('/home')
+            }
+            else if (state === 1) {
+                console.log('wrong password');
+                this.error_msg = 'wrong password';
+            }
+            else if (state === 2) {
+                console.log('didn\'t find account');
+                this.error_msg = 'didn\'t find account';
+            }
+            else if (state === 3) {
+                console.log('hasbeeb loggin');
+                this.$router.replace('/home')
+            }
         },
         signup() {
             //this.$route.params.site_from = 'fromLogin'

@@ -33,8 +33,9 @@ export default {
             return {
                   ws: null,
                   serverUrl: "ws://localhost:8080/ws",
-                  receiver_messages: ['admin2'],
-                  sender_messages: '030',
+                  receiver_messages: [''],
+                  sender_messages: '',
+                  source_page: null
             };
       },
       mounted: function() {
@@ -53,12 +54,17 @@ export default {
                   let data = event.data;
                   data = data.split(/\r?\n/);
                   //console.dir(this.messages);
+                  receiver_messages = [];
                   for (let i = 0; i < data.length; i++) {
                         let msg = JSON.parse(data[i]);
                         this.receiver_messages.push(msg);
-                  }   
+                  }
+                  if (this.receiver_messages[1] === 'LOGIN') {
+                        this.source_page.loginResponse(this.receiver_messages[3]);
+                  }
             },
-            Login(userAccount, userPassword) {
+            Login(sourcePage, userAccount, userPassword) {
+                  this.source_page = sourcePage;
                   console.log("send ");
                   let json_sf = JSON.stringify({Type: 'LOGIN', User: userAccount, Password: userPassword})
                   console.log(json_sf);
