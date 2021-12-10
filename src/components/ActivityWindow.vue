@@ -263,11 +263,11 @@ export default {
     },
     methods: {
        submit () {
-           this.$router.replace('/Login')
+           this.$router.replace('/login')
        },
        cancel () {
            this.dialog = false,
-           this.$router.replace('/Login')
+           this.$router.replace('/login')
        }
    }
 }

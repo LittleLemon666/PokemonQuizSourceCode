@@ -7,7 +7,7 @@
         <el-form ref = "AccountForm" :model = "account"   rules = "rules" label-position = "left" label-width = "0px" class = "demo-ruleForm login-container">
        <!--tab標籤-->
             <el-tabs v-model = "activeName" @tab-click = "handleClick" class = "users">
-                <img src="../assets/logo.jpg">
+                <img src="../assets/logo.jpg" width="100%" height="30%">
             </el-tabs>
 
             <el-form-item prop = "username">
@@ -69,11 +69,11 @@ export default {
     },
     methods: {
         login() {
-            this.$router.replace('/Home')  
+            this.$router.replace('/home')  
         },
         signup() {
             //this.$route.params.site_from = 'fromLogin'
-            this.$router.replace('/Signup')  
+            this.$router.replace('/signup')  
         }
     }
 }</script>

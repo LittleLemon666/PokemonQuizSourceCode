@@ -90,7 +90,7 @@ export default {
     },
     methods: {
        save () {
-           this.$router.replace('/Login')
+           this.$router.replace('/login')
        }
    }
 }

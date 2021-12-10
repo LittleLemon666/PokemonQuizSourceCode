@@ -1,95 +1,21 @@
 <template>
-    <v-app>
-        <div class="m-header">
-            <v-layout justify-space-between rowt>
-                    <div class="picture">
-                        <img @click = "Home" src="../assets/logo.jpg" class="bar_picture">
-                    </div>
-                    <v-card flat>
-                        <v-row>
-                            <v-col>
-                                <a @click = "Activity">Activity</a>
-                            </v-col>
-                            <v-col>
-                                <a @click = "Booking">Booking</a>
-                            </v-col>
-                            <v-col>
-                                <div>
-                                    <v-toolbar
-                                        rounded
-                                        width=300
-                                        dense
-                                    >
-                                        <v-text-field
-                                            flat
-                                            solo
-                                            dense
-                                            hide-details
-                                            v-model="search_text"
-                                        ></v-text-field>
-
-                                        <v-btn
-                                            icon
-                                            class="hidden-xs-only"
-                                        >
-                                        <v-icon>mdi-magnify</v-icon>
-                                        </v-btn>
-                                    </v-toolbar>
-                                </div>
-                            </v-col>
-                            <v-col>
-                                <v-menu
-                                    left
-                                    bottom
-                                >
-                                    <template v-slot:activator="{ on, attrs }">
-                                    <v-btn
-                                        icon
-                                        v-bind="attrs"
-                                        v-on="on"
-                                    >
-                                        <v-icon>mdi-cog</v-icon>
-                                    </v-btn>
-                                    </template>
-                                    <v-list>
-                                        <v-list-item
-                                            v-for="item in setting_items"
-                                            :key="item"
-                                            @click="settingAction(item.action)"
-                                        >
-                                            <v-list-item-title>
-                                                {{ item.title }}
-                                            </v-list-item-title>
-                                        </v-list-item>
-                                    </v-list>
-                                </v-menu>
-                            </v-col>
-                        </v-row>
-                    </v-card>
-            </v-layout>
-            <component :is="currentTab" keep-alive></component>
-        </div>
-        <div class="m-content">
-            <v-layout justify-end rowc>
-                <v-col
-                    cols="12"
-                    rows="36"
-                    sm="6"
-                >
-                <v-date-picker
-                    no-title
-                    v-model="dates"
-                    input-class="datetime-picker"
-                    width="100%"
-                    :event-color="date => date[9] % 2 ? 'red' : 'yellow'"
-                    :events="functionEvents"
-                >
-                </v-date-picker>
-                </v-col>
-            </v-layout>
-                </v-card>
-        </div>
-    </v-app>
+    <v-layout justify-end rowc>
+        <v-col
+            cols="12"
+            rows="36"
+            sm="6"
+        >
+        <v-date-picker
+            no-title
+            v-model="dates"
+            input-class="datetime-picker"
+            width="100%"
+            :event-color="date => date[9] % 2 ? 'red' : 'yellow'"
+            :events="functionEvents"
+        >
+        </v-date-picker>
+        </v-col>
+    </v-layout>
 </template> 
 
 <script>
@@ -118,24 +44,6 @@ export default {
       })
     },
     methods: {
-        Activity () {
-           this.$router.replace('/Activity')
-        },
-        Booking() {
-            this.$router.replace('/Booking')  
-        },
-        Home() {
-            this.$router.replace('/Home')  
-        },
-        settingAction(action){
-            if (action === 'user'){
-                // to be fix
-                this.$router.replace('Signup')
-            }
-            else if (action === 'logout'){
-                this.$router.replace('/')
-            }
-        },
         functionEvents (date) {
             const [,, day] = date.split('-')
             if ([12, 17, 28].includes(parseInt(day, 10))) return true
