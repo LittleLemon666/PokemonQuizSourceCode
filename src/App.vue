@@ -22,23 +22,71 @@
             <link href="https://fonts.googleapis.com/css2?family=Material+Icons+Two+Tone"
                   rel="stylesheet">
             <!--img src="./assets/logo.png"-->
-            <router-view/>
+            <router-view @Login="Login"/>
       </div>
 </template>
 
 <script>
 export default {
-  name: 'App'
+      name: 'App',
+      data () {
+            return {
+                  ws: null,
+                  serverUrl: "ws://localhost:8080/ws",
+                  receiver_messages: ['admin2'],
+                  sender_messages: '030',
+            };
+      },
+      mounted: function() {
+            this.connectToWebsocket()
+      },
+      methods: {
+            connectToWebsocket() {
+                  this.ws = new WebSocket( this.serverUrl );
+                  this.ws.addEventListener('open', (event) => { this.onWebsocketOpen(event) });
+                  this.ws.addEventListener('message', (event) => { this.handleNewMessage(event) });
+            },
+            onWebsocketOpen() {
+                  console.log("connected to WS!");
+            },
+            handleNewMessage(event) {
+                  let data = event.data;
+                  data = data.split(/\r?\n/);
+                  //console.dir(this.messages);
+                  for (let i = 0; i < data.length; i++) {
+                        let msg = JSON.parse(data[i]);
+                        this.receiver_messages.push(msg);
+                  }   
+            },
+            Login(userAccount, userPassword) {
+                  console.log("send ");
+                  let json_sf = JSON.stringify({Type: 'LOGIN', User: userAccount, Password: userPassword})
+                  console.log(json_sf);
+                  if(this.ws.readyState === 1) {
+                        this.ws.send(json_sf);
+                  }
+            },
+            sendMessage(d) {
+                  this.sender_messages = d;
+                  console.log("send ");
+                  console.log(d);
+                  console.log(JSON.stringify({Type: this.sender_messages}));
+                  if(this.ws.readyState === 1 && this.sender_messages !== "") {
+                        this.ws.send(JSON.stringify({Type: this.sender_messages}));
+                        this.sender_messages = "";
+                  }
+            }
+      }
 }
 </script>
 
 <style>
 #app {
-  font-family: 'Avenir', Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
+      font-family: 'Avenir', Helvetica, Arial, sans-serif;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+      text-align: center;
+      color: #2c3e50;
+      margin-top: 60px;
 }
 </style>

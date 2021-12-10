@@ -67,7 +67,7 @@ export default {
     },
     // mounted: function() {
     //     console.log('Starting connection to WebSocket Server');
-    //     this.connection = new WebSocket('ws://localhost:8080/pos-detail');
+    //     this.connection = new WebSocket('ws://localhost:8080/');
 
     //     this.connection.onmessage = function(event) {
     //         console.log('Server message : ' + event.data);
@@ -75,6 +75,7 @@ export default {
     // },
     methods: {
         login() {
+            this.$emit('Login', this.account.username, this.account.password)
             this.$router.replace('/home')
             // this.connect('ws://' + location.host + '/socket/websocket/030', { format: 'json' })
         },
