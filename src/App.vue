@@ -52,13 +52,16 @@ export default {
             },
             handleNewMessage(event) {
                   let data = event.data;
+                  console.log(data)
                   data = data.split(/\r?\n/);
+                  console.log(data)
                   //console.dir(this.messages);
                   this.receiver_messages = [];
                   for (let i = 0; i < data.length; i++) {
                         let msg = JSON.parse(data[i]);
                         this.receiver_messages.push(msg);
                   }
+                  console.log(this.receiver_messages)
                   if (this.receiver_messages.Type === 'LOGIN') {
                         this.source_page.loginResponse(this.receiver_messages.State);
                   }
