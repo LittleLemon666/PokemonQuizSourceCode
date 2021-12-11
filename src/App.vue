@@ -54,7 +54,7 @@ export default {
                   let data = event.data;
                   data = data.split(/\r?\n/);
                   //console.dir(this.messages);
-                  receiver_messages = [];
+                  this.receiver_messages = [];
                   for (let i = 0; i < data.length; i++) {
                         let msg = JSON.parse(data[i]);
                         this.receiver_messages.push(msg);
