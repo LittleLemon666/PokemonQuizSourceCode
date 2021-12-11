@@ -59,8 +59,8 @@ export default {
                         let msg = JSON.parse(data[i]);
                         this.receiver_messages.push(msg);
                   }
-                  if (this.receiver_messages[1] === 'LOGIN') {
-                        this.source_page.loginResponse(this.receiver_messages[3]);
+                  if (this.receiver_messages.Type === 'LOGIN') {
+                        this.source_page.loginResponse(this.receiver_messages.State);
                   }
             },
             Login(sourcePage, userAccount, userPassword) {
