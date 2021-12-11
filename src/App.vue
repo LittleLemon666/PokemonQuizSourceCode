@@ -22,7 +22,7 @@
             <link href="https://fonts.googleapis.com/css2?family=Material+Icons+Two+Tone"
                   rel="stylesheet">
             <!--img src="./assets/logo.png"-->
-            <router-view @Login="Login"/>
+            <router-view @Login="Login" @Save="Save"/>
       </div>
 </template>
 
@@ -65,11 +65,23 @@ export default {
                   if (this.receiver_messages.Type === 'LOGIN') {
                         this.source_page.loginResponse(this.receiver_messages.State);
                   }
+                  else if (this.receiver_messages.Type === 'REGISTER') {
+                        this.source_page.saveResponse(this.receiver_messages.State);
+                  }
             },
             Login(sourcePage, userAccount, userPassword) {
                   this.source_page = sourcePage;
                   console.log("send ");
                   let json_sf = JSON.stringify({Type: 'LOGIN', User: userAccount, Password: userPassword})
+                  console.log(json_sf);
+                  if(this.ws.readyState === 1) {
+                        this.ws.send(json_sf);
+                  }
+            },
+            Save(sourcePage, userMail, account, firstName, secondName, password) {
+                  this.source_page = sourcePage;
+                  console.log("send ");
+                  let json_sf = JSON.stringify({Type: 'REGISTER', UserMail: userMail, Account: account, FirstName: firstName, SecondName: secondName, Password: password})
                   console.log(json_sf);
                   if(this.ws.readyState === 1) {
                         this.ws.send(json_sf);

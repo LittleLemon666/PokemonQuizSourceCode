@@ -83,19 +83,19 @@ export default {
         loginResponse(state) {
             console.log(state);
             this.error_msg = '';
-            if (state === 0) {
+            if (state === '0') {
                 console.log('ok');
                 this.$router.replace('/home')
             }
-            else if (state === 1) {
+            else if (state === '1') {
                 console.log('wrong password');
                 this.error_msg = 'wrong password';
             }
-            else if (state === 2) {
+            else if (state === '2') {
                 console.log('didn\'t find account');
                 this.error_msg = 'didn\'t find account';
             }
-            else if (state === 3) {
+            else if (state === '3') {
                 console.log('hasbeeb loggin');
                 this.$router.replace('/home')
             }
