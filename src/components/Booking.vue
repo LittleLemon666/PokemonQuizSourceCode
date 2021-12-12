@@ -10,8 +10,8 @@
                 <v-card flat color="light-blue lighten-5" class="ma-10" width="40%" height="40%" v-for="(person, personIndex) in persons[roomIndex]" :key="(person, personIndex)">
                     <v-img
                         :class="{'row-pointer': !isBooked[roomIndex][personIndex], 'booked-room': isBooked[roomIndex][personIndex]}"
-                        alt="RoomTypeA"
-                        :src="require('../assets/RoomPhotos/RoomA1.jpg')"
+                        :alt=room
+                        :src="require('../assets/RoomPhotos/' + room + (personIndex+1).toString() + '.jpg')"
                         max-height="100%"
                         max-width="100%"
                         contain
