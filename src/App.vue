@@ -52,21 +52,26 @@ export default {
             },
             handleNewMessage(event) {
                   let data = event.data;
-                  //let data = '{"State":"0","Type":"LOGIN"}'
-                  console.log(data)
+                  //let data = '{"State":"1","Type":"LOGIN"}\n{"State":"0","Type":"LOGIN"}'
+                  //console.log(data);
                   data = data.split(/\r?\n/);
                   //console.dir(this.messages);
+                  this.receiver_messages = [];
                   for (let i = 0; i < data.length; i++) {
                         let msg = JSON.parse(data[i]);
-                        this.receiver_messages = msg;
+                        this.receiver_messages.push(msg);
+                        console.log(msg);
+                  }
+
+                  for (let i = 0; i < data.length; i++) {
+                       if (this.receiver_messages[i].Type === 'LOGIN') {
+                              this.source_page.loginResponse(this.receiver_messages[i].State);
+                        }
+                        else if (this.receiver_messages[i].Type === 'REGISTER') {
+                              this.source_page.saveResponse(this.receiver_messages[i].State);
+                        } 
                   }
                   //console.log(this.receiver_messages)
-                  if (this.receiver_messages.Type === 'LOGIN') {
-                        this.source_page.loginResponse(this.receiver_messages.State);
-                  }
-                  else if (this.receiver_messages.Type === 'REGISTER') {
-                        this.source_page.saveResponse(this.receiver_messages.State);
-                  }
             },
             Login(sourcePage, userAccount, userPassword) {
                   this.source_page = sourcePage;
