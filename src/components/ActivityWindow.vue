@@ -6,7 +6,7 @@
             <v-container>
                 <v-row>
                     <v-col cols="12">
-                        <v-text-field label="Theme" v-model="theme"></v-text-field>
+                        <v-text-field label="Theme" v-model="roomInfo.theme"></v-text-field>
                     </v-col>
                 </v-row>
                 <v-row>
@@ -14,7 +14,7 @@
                         <v-subheader>Chairperson</v-subheader>
                     </v-col>
                     <v-col cols="8">
-                        <v-text-field v-model="chairperson"></v-text-field>
+                        <v-text-field v-model="roomInfo.chairperson"></v-text-field>
                     </v-col>
                 </v-row>
                 <v-row>
@@ -26,14 +26,14 @@
                             ref="menu_visible1"
                             v-model="menu_visible1"
                             :close-on-content-click="false"
-                            :return-value.sync="begin_date"
+                            :return-value.sync="roomInfo.date"
                             transition="scale-transition"
                             offset-y
                             min-width="auto"
                         >
                             <template v-slot:activator="{ on, attrs }">
                                 <v-text-field
-                                    v-model="begin_date"
+                                    v-model="roomInfo.date"
                                     append-icon="event"
                                     @click:append="on.click"
                                     readonly
@@ -64,7 +64,7 @@
                                 <v-tab-item>
                                     <v-card flat>
                                         <v-date-picker
-                                            v-model="begin_date"
+                                            v-model="roomInfo.date"
                                             no-title
                                             scrollable
                                             value="yyyy/MM/dd"
@@ -73,7 +73,7 @@
                                                 <v-btn
                                                     text
                                                     color="primary"
-                                                    @click="$refs.menu_visible1.save(begin_date)"
+                                                    @click="$refs.menu_visible1.save(roomInfo.date)"
                                                 >
                                                     confirm
                                                 </v-btn>
@@ -92,14 +92,14 @@
                             ref="menu_visible2"
                             v-model="menu_visible2"
                             :close-on-content-click="false"
-                            :return-value.sync="end_date"
+                            :return-value.sync="roomInfo.date"
                             transition="scale-transition"
                             offset-y
                             min-width="auto"
                         >
                             <template v-slot:activator="{ on, attrs }">
                                 <v-text-field
-                                    v-model="end_date"
+                                    v-model="roomInfo.date"
                                     append-icon="event"
                                     @click:append="on.click"
                                     readonly
@@ -130,7 +130,7 @@
                                 <v-tab-item>
                                     <v-card flat>
                                         <v-date-picker
-                                            v-model="end_date"
+                                            v-model="roomInfo.date"
                                             no-title
                                             scrollable
                                             value="yyyy/MM/dd"
@@ -139,7 +139,7 @@
                                                 <v-btn
                                                     text
                                                     color="primary"
-                                                    @click="$refs.menu_visible2.save(end_date)"
+                                                    @click="$refs.menu_visible2.save(roomInfo.date)"
                                                 >
                                                     confirm
                                                 </v-btn>
@@ -158,18 +158,18 @@
                     </v-col>
                     <v-col cols="8">
                         <v-text-field 
-                            :rules="[rules.required, rules.emailMatch]"
+                            :rules="[rules.required]"
                             name="input-E-mail"
+                            v-model="roomInfo.emails"
                             value=""
-                            multiple 
                             error
-                        ></v-text-field>
+                        ></v-text-field> <!--multiple--> 
                     </v-col>
                 </v-row>
                 <v-row>
                     <v-textarea
                         label="Agenda"
-                        v-model = "agenda"
+                        v-model = "roomInfo.agenda"
                         auto-grow
                         outlined
                         row-height="25"
@@ -177,26 +177,9 @@
                 </v-row>
                 <v-row>
                     <v-col cols="12">
-                        <v-text-field v-model = "notes" label="Notes for self"></v-text-field>
+                        <v-text-field v-model = "roomInfo.notes" label="Notes for self"></v-text-field>
                     </v-col>
                 </v-row>
-                     <select
-                    :class="$options.name"
-                    v-model="selected"
-                    @change="updateValue"
-                >
-                <option
-                    disabled
-                    value=""
-                    v-text="disabledOption"
-                />
-                 <option
-                    v-for="option in options"
-                    :key="option"
-                    :value="option"
-                    v-text="option"
-                 />
-                </select>
                 <v-layout justify-center rowb>
                     <el-button type = "primary" style = "width:30%;" @click = "submit">Submit</el-button>
                     <v-dialog
@@ -248,34 +231,6 @@
 
 <script>
 export default {
-    
-  name: 'FormSelect',
-  model: {
-    // By default, `v-model` reacts to the `input`
-    // event for updating the value, we change this
-    // to `change` for similar behavior as the
-    // native `<select>` element.
-    event: 'change',
-  },
-  props: {
-    // The disabled option is necessary because
-    // otherwise it isn't possible to select the
-    // first item on iOS devices. This prop can
-    // be used to configure the text for the
-    // disabled option.
-    disabledOption: {
-      type: String,
-      default: 'Select something',
-    },
-    options: {
-      type: Array,
-      default: () => [],
-    },
-    value: {
-      type: [String, Number],
-      default: null,
-    },
-  },
     data() {
         return {
             logining : false,
@@ -293,37 +248,39 @@ export default {
                 required: value => !!value || 'Required.',
                 emailMatch: value => !value || /^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/.test(value.split(',')) || 'E-mail must be valid',
             },
-            theme: '',
-            chairperson: '',
+            roomInfo: {
+                roomType: 'RoomA',
+                theme: '',
+                onwer: '',
+                chairperson: '',
+                date: new Date(Date.now()).toISOString().substr(0, 10),
+                timeStart: '',
+                timeEnd: '',
+                emails: '',
+                agenda: '',
+                notes: '',
+            },
             tab: null,
             items: [
                 'Day', 'Month',
             ],
             text: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit',
-            begin_date: new Date(Date.now()).toISOString().substr(0, 10),
-            end_date: new Date(Date.now()).toISOString().substr(0, 10),
             menu_visible1: false,
             menu_visible2: false,
-            agenda: '',
-            notes: '',
             dialog: false,
             selected: this.value,
         }
     },
     methods: {
        submit () {
-           this.$router.replace('/login')
+            //this.$router.replace('/login')
+            console.log(this.roomInfo)
+            this.$emit('Reserve', this, this.roomInfo)
        },
        cancel () {
-           this.dialog = false,
-           this.$router.replace('/login')
+            this.dialog = false,
+            this.$router.replace('/login')
        },
-       updateValue() {
-      // Emitting a `change` event with the new
-      // value of the `<select>` field, updates
-      // all values bound with `v-model`.
-      this.$emit('change', this.selected);
-    }
    }
 }
 </script>
