@@ -1,5 +1,60 @@
 <template>
     <v-app>
+        <v-layout justify-end row0>
+            <v-col cols="1">
+                <v-subheader>Date</v-subheader>
+            </v-col>
+            <v-col cols="1">
+                <v-menu
+                    ref="menuVisible1"
+                    v-model="menuVisible1"
+                    :close-on-content-click="false"
+                    :return-value.sync="date"
+                    transition="scale-transition"
+                    offset-y
+                    min-width="auto"
+                >
+                    <template v-slot:activator="{ on, attrs }">
+                        <v-text-field
+                            v-model="date"
+                            append-icon="event"
+                            @click:append="on.click"
+                            readonly
+                            v-bind="attrs"
+                            v-on="on"
+                        ></v-text-field>
+                    </template>
+                    <v-date-picker
+                        v-model="date"
+                        no-title
+                        scrollable
+                        value="yyyy/MM/dd"
+                    >
+                        <v-layout justify-end row1>
+                            <v-btn
+                                text
+                                color="primary"
+                                @click="$refs.menuVisible1.save(date)"
+                            >
+                                confirm
+                            </v-btn>
+                        </v-layout>
+                    </v-date-picker>
+                </v-menu>
+            </v-col>
+            <v-col cols="1">
+                <v-subheader>Time</v-subheader>
+            </v-col>
+            <v-col cols="1">
+                <v-text-field v-model="timeStart"></v-text-field>
+            </v-col>
+            <v-col cols="1">
+                <v-subheader>~</v-subheader>
+            </v-col>
+            <v-col cols="1">
+                <v-text-field v-model="timeEnd"></v-text-field>
+            </v-col>
+        </v-layout>
         <v-container justify-center v-for="(room, roomIndex) in roomNames" :key="(room, roomIndex)">
             <v-row>
                 <v-col rows="12" sm="6" md="3">
@@ -91,6 +146,7 @@
 export default {
     data () {
         return {
+            menuVisible1: false,
             roomTypeIndex: 0,
             roomIndex: 0,
             date: (new Date(Date.now() - (new Date()).getTimezoneOffset() * 60000)).toISOString().substr(0, 10),

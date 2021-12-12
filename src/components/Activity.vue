@@ -32,7 +32,26 @@
 export default {
     data () {
         return {
-            dates: (new Date(Date.now() - (new Date()).getTimezoneOffset() * 60000)).toISOString().substr(0, 10),
+            dates: [
+                (new Date(Date.now() - (new Date()).getTimezoneOffset() * 60000)).toISOString().substr(0, 10),
+                (new Date(Date.now() - (new Date()).getTimezoneOffset() * 60000)).toISOString().substr(0, 10),
+            ],
+            timesStart: [
+                '0700',
+                '1300'
+            ],
+            timesEnd: [
+                '0900',
+                '1700'
+            ],
+            roomTypes: [
+                'RoomA',
+                'RoomC'
+            ],
+            roomIndexs: [
+                1,
+                2
+            ],
             sort_f: 'date',
             sort_items: [{
                 title: 'Date',
