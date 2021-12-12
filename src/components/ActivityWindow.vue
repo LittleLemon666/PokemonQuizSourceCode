@@ -1,7 +1,7 @@
 <template>
 
-<div class = "note" :style = "note">
-    <v-app>
+<v-app>
+    <div class = "note" :style = "note">
         <v-form class = "demo-ruleForm login-container">
             <v-container>
                 <v-row>
@@ -161,6 +161,7 @@
                             :rules="[rules.required, rules.emailMatch]"
                             name="input-E-mail"
                             value=""
+                            multiple 
                             error
                         ></v-text-field>
                     </v-col>
@@ -179,6 +180,23 @@
                         <v-text-field v-model = "notes" label="Notes for self"></v-text-field>
                     </v-col>
                 </v-row>
+                     <select
+                    :class="$options.name"
+                    v-model="selected"
+                    @change="updateValue"
+                >
+                <option
+                    disabled
+                    value=""
+                    v-text="disabledOption"
+                />
+                 <option
+                    v-for="option in options"
+                    :key="option"
+                    :value="option"
+                    v-text="option"
+                 />
+                </select>
                 <v-layout justify-center rowb>
                     <el-button type = "primary" style = "width:30%;" @click = "submit">Submit</el-button>
                     <v-dialog
@@ -220,14 +238,44 @@
                         </v-card>
                     </v-dialog>
                 </v-layout>
+
+               
             </v-container>
         </v-form>
-    </v-app>
-</div>
+    </div>
+</v-app>
 </template> 
 
 <script>
 export default {
+    
+  name: 'FormSelect',
+  model: {
+    // By default, `v-model` reacts to the `input`
+    // event for updating the value, we change this
+    // to `change` for similar behavior as the
+    // native `<select>` element.
+    event: 'change',
+  },
+  props: {
+    // The disabled option is necessary because
+    // otherwise it isn't possible to select the
+    // first item on iOS devices. This prop can
+    // be used to configure the text for the
+    // disabled option.
+    disabledOption: {
+      type: String,
+      default: 'Select something',
+    },
+    options: {
+      type: Array,
+      default: () => [],
+    },
+    value: {
+      type: [String, Number],
+      default: null,
+    },
+  },
     data() {
         return {
             logining : false,
@@ -243,7 +291,7 @@ export default {
             },
             rules: {
                 required: value => !!value || 'Required.',
-                emailMatch: v => !v || /^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/.test(v) || 'E-mail must be valid',
+                emailMatch: value => !value || /^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/.test(value.split(',')) || 'E-mail must be valid',
             },
             theme: '',
             chairperson: '',
@@ -259,6 +307,7 @@ export default {
             agenda: '',
             notes: '',
             dialog: false,
+            selected: this.value,
         }
     },
     methods: {
@@ -268,7 +317,13 @@ export default {
        cancel () {
            this.dialog = false,
            this.$router.replace('/login')
-       }
+       },
+       updateValue() {
+      // Emitting a `change` event with the new
+      // value of the `<select>` field, updates
+      // all values bound with `v-model`.
+      this.$emit('change', this.selected);
+    }
    }
 }
 </script>
