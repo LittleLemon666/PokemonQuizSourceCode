@@ -2,15 +2,18 @@
     <v-app>
         <v-app-bar color="light-blue lighten-5" height="100%" app justify-space-between>
             <v-img
+                class="row-pointer"
                 alt="VRRA"
                 :src="require('../assets/logo.jpg')"
                 max-height="50%"
-                max-width="50%"
+                max-width="20%"
                 position="center left"
                 contain
                 @click="HomeLogo"
             ></v-img>
-                <v-col>
+            <v-col max-width="40%">
+            </v-col>
+            <v-col>
                 <v-card flat color="light-blue lighten-5">
                     <v-row>
                         <v-col v-show="web_at!=='Home'">
@@ -150,3 +153,9 @@ export default {
         },
    }
 }</script>
+
+<style scoped>
+.row-pointer {
+  cursor: pointer;
+}
+</style>
