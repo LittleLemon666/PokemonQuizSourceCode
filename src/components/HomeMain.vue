@@ -142,7 +142,6 @@ export default {
         },
         settingAction(action){
             if (action === 'user'){
-                // to be fix
                 this.$router.replace('signup').catch(()=>{})
                 this.web_at = 'Home'
             }

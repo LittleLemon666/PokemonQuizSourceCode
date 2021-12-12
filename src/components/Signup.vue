@@ -80,7 +80,7 @@ export default {
             },
             firstName: '',
             secondName: '',
-            account: '',
+            account: this.$userName,
             show1: false,
             show2: false,
             password: '',
