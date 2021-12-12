@@ -85,7 +85,8 @@ export default {
             this.error_msg = '';
             if (state === '0') {
                 console.log('ok');
-                this.$router.replace('/home')
+                this.$userName = this.account.username;
+                this.$router.replace('/home');
             }
             else if (state === '1') {
                 console.log('wrong password');
@@ -97,12 +98,12 @@ export default {
             }
             else if (state === '3') {
                 console.log('hasbeeb loggin');
-                this.$router.replace('/home')
+                this.$router.replace('/home');
             }
         },
         signup() {
             //this.$route.params.site_from = 'fromLogin'
-            this.$router.replace('/signup')  
+            this.$router.replace('/signup');
         }
     }
 }</script>

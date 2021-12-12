@@ -249,13 +249,12 @@ export default {
                 emailMatch: value => !value || /^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/.test(value.split(',')) || 'E-mail must be valid',
             },
             roomInfo: {
-                roomType: 'RoomA',
+                roomType: this.$router.params.roomType,
                 theme: '',
-                onwer: '',
-                chairperson: '',
-                date: new Date(Date.now()).toISOString().substr(0, 10),
-                timeStart: '',
-                timeEnd: '',
+                chairperson: this.$userName,
+                date: this.$router.params.date,
+                timeStart: this.$router.params.timeStart,
+                timeEnd: this.$router.params.timeEnd,
                 emails: '',
                 agenda: '',
                 notes: '',
@@ -279,7 +278,7 @@ export default {
        },
        cancel () {
             this.dialog = false,
-            this.$router.replace('/login')
+            this.$router.replace('/booking')
        },
    }
 }

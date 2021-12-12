@@ -10,12 +10,12 @@
                 <v-card flat color="light-blue lighten-5" class="ma-10" width="40%" height="40%" v-for="(person, personIndex) in persons[roomIndex]" :key="(person, personIndex)">
                     <v-img
                         :class="{'row-pointer': !isBooked[roomIndex][personIndex], 'booked-room': isBooked[roomIndex][personIndex]}"
-                        :alt=room
+                        :alt="room + (personIndex+1).toString()"
                         :src="require('../assets/RoomPhotos/' + room + (personIndex+1).toString() + '.jpg')"
                         max-height="100%"
                         max-width="100%"
                         contain
-                        @click="Popmenu"
+                        @click="getID(roomIndex, personIndex); Popmenu($event)"
                     >
                         <v-card class="embed-card" flat color="light-blue lighten-5" position="bottom right">
                             <v-subheader>Person {{ person }} </v-subheader>
@@ -73,7 +73,7 @@
                                 <v-btn
                                     text
                                     color="primary"
-                                    @click="$refs.menuVisible.save(date)"
+                                    @click="$refs.menuVisible.save(date); Rent()"
                                 >
                                     confirm
                                 </v-btn>
@@ -91,7 +91,11 @@
 export default {
     data () {
         return {
+            roomTypeIndex: 0,
+            roomIndex: 0,
             date: (new Date(Date.now() - (new Date()).getTimezoneOffset() * 60000)).toISOString().substr(0, 10),
+            timeStart: '0700',
+            timeEnd: '0900',
             roomNames: [
                 'RoomA',
                 'RoomB',
@@ -137,17 +141,30 @@ export default {
         };
     },
     methods: {
+        getID (roomIndex, personIndex) {
+            this.roomTypeIndex = roomIndex;
+            this.roomIndex = personIndex;
+        },
         Popmenu (event) {
             if (!this.menuVisible) {
-                this.x = event.pageX;
-                this.y = event.pageY;
+                this.x = event.clientX;
+                this.y = event.clientY;
             }
-            this.menuVisible = true;
+            if (!this.isBooked[this.roomTypeIndex][this.roomIndex]) {
+                this.menuVisible = true;
+            }
         },
         Rent () {
-            //this.$router.replace('/login')
-            console.log(this.roomInfo)
-            this.$emit('Reserve', this, this.roomInfo)
+            //console.log(this.$userName)
+            let data = {
+                roomType: this.roomNames[this.roomTypeIndex] + (this.roomIndex+1).toString(),
+                date: this.date,
+                timeStart: this.timeStart,
+                timeEnd: this.timeEnd
+            };
+            console.log(data.roomType)
+            this.$router.params = data
+            this.$router.replace('/activityWindow')
         },
     }
 }</script>
