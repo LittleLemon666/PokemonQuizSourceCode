@@ -22,7 +22,7 @@
             <link href="https://fonts.googleapis.com/css2?family=Material+Icons+Two+Tone"
                   rel="stylesheet">
             <!--img src="./assets/logo.png"-->
-            <router-view @Login="Login" @Save="Save" @Reserve="Reserve"/>
+            <router-view @Login="Login" @Save="Save" @Reserve="Reserve" @FetchRoomByTomeInterval="FetchRoomByTomeInterval"/>
       </div>
 </template>
 
@@ -99,6 +99,15 @@ export default {
                   let invites = roomInfo.emails.split(',');
                   console.log("send ");
                   let json_sf = JSON.stringify({Type: 'RENTROOM', Room: roomInfo.roomType, Theme: roomInfo.theme, Chairperson: roomInfo.chairperson, Date: roomInfo.date, TimeStart: roomInfo.timeStart, TimeEnd: roomInfo.timeEnd, Invites: invites, Agenda: roomInfo.agenda, Note: roomInfo.notes})
+                  console.log(json_sf);
+                  if(this.ws.readyState === 1) {
+                        this.ws.send(json_sf);
+                  }
+            },
+            FetchRoomByTomeInterval(sourcePage, dateBegin, dateEnd, timeBegin, timeEnd) {
+                  this.source_page = sourcePage;
+                  console.log("send ");
+                  let json_sf = JSON.stringify({Type: 'FETCHRDI', DateBegin: dateBegin, DateEnd: dateEnd, TimeBegin: timeBegin, TimeEnd: timeEnd})
                   console.log(json_sf);
                   if(this.ws.readyState === 1) {
                         this.ws.send(json_sf);

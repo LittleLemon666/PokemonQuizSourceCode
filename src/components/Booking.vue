@@ -9,14 +9,14 @@
                     ref="menuVisible1"
                     v-model="menuVisible1"
                     :close-on-content-click="false"
-                    :return-value.sync="date"
+                    :return-value.sync="dateBegin"
                     transition="scale-transition"
                     offset-y
                     min-width="auto"
                 >
                     <template v-slot:activator="{ on, attrs }">
                         <v-text-field
-                            v-model="date"
+                            v-model="dateBegin"
                             append-icon="event"
                             @click:append="on.click"
                             readonly
@@ -25,7 +25,7 @@
                         ></v-text-field>
                     </template>
                     <v-date-picker
-                        v-model="date"
+                        v-model="dateBegin"
                         no-title
                         scrollable
                         value="yyyy/MM/dd"
@@ -34,7 +34,48 @@
                             <v-btn
                                 text
                                 color="primary"
-                                @click="$refs.menuVisible1.save(date)"
+                                @click="$refs.menuVisible1.save(dateBegin); changeTime()"
+                            >
+                                confirm
+                            </v-btn>
+                        </v-layout>
+                    </v-date-picker>
+                </v-menu>
+            </v-col>
+            <v-col cols="1">
+                <v-subheader>~</v-subheader>
+            </v-col>
+            <v-col cols="1">
+                <v-menu
+                    ref="menuVisible2"
+                    v-model="menuVisible2"
+                    :close-on-content-click="false"
+                    :return-value.sync="dateEnd"
+                    transition="scale-transition"
+                    offset-y
+                    min-width="auto"
+                >
+                    <template v-slot:activator="{ on, attrs }">
+                        <v-text-field
+                            v-model="dateEnd"
+                            append-icon="event"
+                            @click:append="on.click"
+                            readonly
+                            v-bind="attrs"
+                            v-on="on"
+                        ></v-text-field>
+                    </template>
+                    <v-date-picker
+                        v-model="dateEnd"
+                        no-title
+                        scrollable
+                        value="yyyy/MM/dd"
+                    >
+                        <v-layout justify-end row1>
+                            <v-btn
+                                text
+                                color="primary"
+                                @click="$refs.menuVisible2.save(dateEnd); changeTime()"
                             >
                                 confirm
                             </v-btn>
@@ -147,9 +188,12 @@ export default {
     data () {
         return {
             menuVisible1: false,
+            menuVisible2: false,
             roomTypeIndex: 0,
             roomIndex: 0,
             date: (new Date(Date.now() - (new Date()).getTimezoneOffset() * 60000)).toISOString().substr(0, 10),
+            dateBegin: (new Date(Date.now() - (new Date()).getTimezoneOffset() * 60000)).toISOString().substr(0, 10),
+            dateEnd: (new Date(Date.now() - (new Date()).getTimezoneOffset() * 60000)).toISOString().substr(0, 10),
             timeStart: '0700',
             timeEnd: '0900',
             roomNames: [
@@ -222,6 +266,9 @@ export default {
             this.$router.params = data
             this.$router.replace('/activityWindow')
         },
+        changeTime() {
+            this.$emit('FetchRoomByTomeInterval', this, this.dateBegin, this.dateEnd, this.timeStart, this.timeEnd)
+        }
     }
 }</script>
 
