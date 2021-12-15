@@ -245,7 +245,7 @@ export default {
                 roomInfo: {
                     roomType: this.roomNames[this.roomTypeIndex] + (this.roomIndex+1).toString(),
                     theme: '',
-                    chairPerson: this.$userName,
+                    chairPerson: this.$email,
                     date: this.date,
                     timeStart: this.timeStart,
                     timeEnd: this.timeEnd,

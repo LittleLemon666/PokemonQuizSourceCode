@@ -9,7 +9,7 @@
             <v-container>
                 <v-row>
                     <v-col cols="12">
-                        <v-text-field :readonly="roomInfo.chairperson!==$userName" label="Theme" v-model="roomInfo.theme"></v-text-field>
+                        <v-text-field :readonly="roomInfo.chairperson!==$email" label="Theme" v-model="roomInfo.theme"></v-text-field>
                     </v-col>
                 </v-row>
                 <v-row>
@@ -33,7 +33,7 @@
                             transition="scale-transition"
                             offset-y
                             min-width="auto"
-                            :disabled="roomInfo.chairperson!==$userName"
+                            :disabled="roomInfo.chairperson!==$email"
                         >
                             <template v-slot:activator="{ on, attrs }">
                                 <v-text-field
@@ -100,7 +100,7 @@
                             transition="scale-transition"
                             offset-y
                             min-width="auto"
-                            :disabled="roomInfo.chairperson!==$userName"
+                            :disabled="roomInfo.chairperson!==$email"
                         >
                             <template v-slot:activator="{ on, attrs }">
                                 <v-text-field
@@ -167,7 +167,7 @@
                             name="input-E-mail"
                             v-model="roomInfo.emails"
                             value=""
-                            :readonly="roomInfo.chairperson!==$userName"
+                            :readonly="roomInfo.chairperson!==$email"
                             error
                         ></v-text-field> <!--multiple--> 
                     </v-col>
@@ -179,12 +179,12 @@
                         auto-grow
                         outlined
                         row-height="25"
-                        :readonly="roomInfo.chairperson!==$userName"
+                        :readonly="roomInfo.chairperson!==$email"
                     ></v-textarea>
                 </v-row>
                 <v-row>
                     <v-col cols="12">
-                        <v-text-field v-show="roomInfo.chairperson===$userName" v-model = "roomInfo.notes" label="Notes for self"></v-text-field>
+                        <v-text-field v-show="roomInfo.chairperson===$email" v-model = "roomInfo.notes" label="Notes for self"></v-text-field>
                     </v-col>
                 </v-row>
                 <p v-show="error_msg!==''" v-text="error_msg"></p>
@@ -203,7 +203,7 @@
                                 style = "width:30%;"
                                 v-bind="attrs"
                                 v-on="on"
-                                v-show="roomInfo.chairperson===$userName"
+                                v-show="roomInfo.chairperson===$email"
                             >
                             Cancel
                             </v-btn>
@@ -332,6 +332,10 @@ export default {
             else if (state === '1') {
                 console.log('Cancel failed');
                 this.error_msg = 'Cancel failed';
+            }
+            else if (state === '5') {
+                console.log('U R NOT LOGIN');
+                this.$router.replace('/login');
             }
         },
         back() {

@@ -65,7 +65,7 @@ export default {
 
                   for (let i = 0; i < data.length; i++) {
                        if (this.receiver_messages[i].Type === 'LOGIN') {
-                              this.source_page.loginResponse(this.receiver_messages[i].State);
+                              this.source_page.loginResponse(this.receiver_messages[i].State, this.receiver_messages[i].FirstName, this.receiver_messages[i].SecondName, this.receiver_messages[i].UserMail);
                         }
                         else if (this.receiver_messages[i].Type === 'REGISTER') {
                               this.source_page.saveResponse(this.receiver_messages[i].State);
@@ -108,7 +108,9 @@ export default {
             },
             Reserve(sourcePage, roomInfo) {
                   this.source_page = sourcePage;
-                  let invites = roomInfo.emails.split(',');
+                  let invites = []
+                  if (roomInfo.emails)
+                        invites = roomInfo.emails.split(',');
                   console.log("send ");
                   let json_sf = JSON.stringify({Type: 'RENTROOM', Room: roomInfo.roomType, Theme: roomInfo.theme, Chairperson: roomInfo.chairperson, Date: roomInfo.date, TimeStart: roomInfo.timeStart, TimeEnd: roomInfo.timeEnd, Invites: invites, Agenda: roomInfo.agenda, Note: roomInfo.notes})
                   console.log(json_sf);

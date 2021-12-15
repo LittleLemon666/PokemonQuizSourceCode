@@ -80,12 +80,15 @@ export default {
             // this.loginResponse(3) // for test
             // this.connect('ws://' + location.host + '/socket/websocket/030', { format: 'json' })
         },
-        loginResponse(state) {
+        loginResponse(state, firstName, lastName, email) {
             console.log(state);
             this.error_msg = '';
             if (state === '0') {
                 console.log('ok');
                 this.$userName = this.account.username;
+                this.$firstName = firstName;
+                this.$lastName = lastName;
+                this.$email = email;
                 this.$router.replace('/home');
             }
             else if (state === '1') {

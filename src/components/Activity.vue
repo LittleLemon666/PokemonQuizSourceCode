@@ -60,7 +60,7 @@ export default {
                 {
                     room: 'RoomC2',
                     theme: 'Hello',
-                    chairPerson: 'Lemon',
+                    chairPerson: 'ntust@gamil.com',
                     date: (new Date(Date.now() - (new Date()).getTimezoneOffset() * 60000)).toISOString().substr(0, 10),
                     timeStart: '0700',
                     timeEnd: '0900',
@@ -71,7 +71,7 @@ export default {
                 {
                     room: 'RoomA1',
                     theme: 'World',
-                    chairPerson: 'admin',
+                    chairPerson: 'b10815000@gapps.ntust.edu.tw',
                     date: (new Date(Date.now() - (new Date()).getTimezoneOffset() * 60000)).toISOString().substr(0, 10),
                     timeStart: '0900',
                     timeEnd: '1700',

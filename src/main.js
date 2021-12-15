@@ -11,6 +11,9 @@ import 'material-design-icons-iconfont/dist/material-design-icons.css'
 Vue.use(ElementUI)
 Vue.config.productionTip = false
 Vue.prototype.$userName = 'admin'
+Vue.prototype.$firstName = 'NTUST'
+Vue.prototype.$lastName = 'CSIE'
+Vue.prototype.$email = 'b10815000@gapps.ntust.edu.tw'
 
 /* eslint-disable no-new */
 new Vue({
