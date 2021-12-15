@@ -242,13 +242,19 @@ export default {
         Rent () {
             //console.log(this.$userName)
             let data = {
-                roomType: this.roomNames[this.roomTypeIndex] + (this.roomIndex+1).toString(),
-                chairPerson: this.$userName,
-                date: this.date,
-                timeStart: this.timeStart,
-                timeEnd: this.timeEnd
+                roomInfo: {
+                    roomType: this.roomNames[this.roomTypeIndex] + (this.roomIndex+1).toString(),
+                    theme: '',
+                    chairPerson: this.$userName,
+                    date: this.date,
+                    timeStart: this.timeStart,
+                    timeEnd: this.timeEnd,
+                    emails: [],
+                    agenda: '',
+                    notes: ''
+                },
+                fromSite: 'booking'
             };
-            console.log(data.roomType)
             this.$router.params = data
             this.$router.replace('/activityWindow')
         },

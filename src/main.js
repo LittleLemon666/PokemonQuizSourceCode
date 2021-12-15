@@ -10,7 +10,7 @@ import 'material-design-icons-iconfont/dist/material-design-icons.css'
 
 Vue.use(ElementUI)
 Vue.config.productionTip = false
-Vue.prototype.$userName = 'NTUST'
+Vue.prototype.$userName = 'admin'
 
 /* eslint-disable no-new */
 new Vue({

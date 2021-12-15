@@ -3,10 +3,13 @@
 <v-app>
     <div class = "note" :style = "note">
         <v-form class = "demo-ruleForm login-container">
+            <v-layout justify-end row0>
+                <v-icon @click="back">mdi-close-circle</v-icon>
+            </v-layout>
             <v-container>
                 <v-row>
                     <v-col cols="12">
-                        <v-text-field label="Theme" v-model="roomInfo.theme"></v-text-field>
+                        <v-text-field :readonly="roomInfo.chairperson!==$userName" label="Theme" v-model="roomInfo.theme"></v-text-field>
                     </v-col>
                 </v-row>
                 <v-row>
@@ -30,6 +33,7 @@
                             transition="scale-transition"
                             offset-y
                             min-width="auto"
+                            :disabled="roomInfo.chairperson!==$userName"
                         >
                             <template v-slot:activator="{ on, attrs }">
                                 <v-text-field
@@ -96,6 +100,7 @@
                             transition="scale-transition"
                             offset-y
                             min-width="auto"
+                            :disabled="roomInfo.chairperson!==$userName"
                         >
                             <template v-slot:activator="{ on, attrs }">
                                 <v-text-field
@@ -162,6 +167,7 @@
                             name="input-E-mail"
                             v-model="roomInfo.emails"
                             value=""
+                            :readonly="roomInfo.chairperson!==$userName"
                             error
                         ></v-text-field> <!--multiple--> 
                     </v-col>
@@ -173,17 +179,18 @@
                         auto-grow
                         outlined
                         row-height="25"
+                        :readonly="roomInfo.chairperson!==$userName"
                     ></v-textarea>
                 </v-row>
                 <v-row>
                     <v-col cols="12">
-                        <v-text-field v-model = "roomInfo.notes" label="Notes for self"></v-text-field>
+                        <v-text-field v-show="roomInfo.chairperson===$userName" v-model = "roomInfo.notes" label="Notes for self"></v-text-field>
                     </v-col>
                 </v-row>
                 <p v-show="error_msg!==''" v-text="error_msg"></p>
                 <v-layout justify-center rowb>
                     <el-button type = "primary" style = "width:30%;" @click = "submit" v-show="fromSite!=='activity'">Submit</el-button>
-                    <el-button type = "primary" style = "width:30%;" @click = "back" v-show="fromSite==='activity'">Return</el-button>
+                    <el-button type = "primary" style = "width:30%;" @click = "saveInfo" v-show="fromSite==='activity'&&roomInfo.chairperson===$userName">Save</el-button>
                     <v-dialog
                         v-model="dialog"
                         persistent
@@ -191,12 +198,12 @@
                         >
                         <template v-slot:activator="{ on, attrs }">
                             <v-btn
-                            color="primary"
-                            dark
-                            style = "width:30%;"
-                            v-bind="attrs"
-                            v-on="on"
-                            v-show="roomInfo.chairperson===$userName"
+                                color="primary"
+                                dark
+                                style = "width:30%;"
+                                v-bind="attrs"
+                                v-on="on"
+                                v-show="roomInfo.chairperson===$userName"
                             >
                             Cancel
                             </v-btn>
@@ -274,12 +281,13 @@ export default {
         }
     },
     methods: {
-       submit () {
-            //this.$router.replace('/login')
-            console.log(this.roomInfo)
+        submit () {
             this.$emit('Reserve', this, this.roomInfo)
-       },
-       reserveResponse(state) {
+        },
+        saveInfo () {
+            this.$emit('Saving', this, this.roomInfo)
+        },
+        reserveResponse(state) {
             console.log(state);
             this.error_msg = '';
             if (state === '0') {
@@ -302,8 +310,11 @@ export default {
                 console.log('U R NOT LOGIN');
                 this.$router.replace('/login');
             }
-       },
-       cancel () {
+        },
+        saveInfoResponse(state) {
+            this.reserveResponse(state)
+        },
+        cancel () {
             if (this.fromSite === 'activity') {
                 this.dialog = false
                 console.log('cancel the meeting')
@@ -312,8 +323,8 @@ export default {
             else {
                 this.$router.replace('/booking')
             }
-       },
-       cancelResponse(state) {
+        },
+        cancelResponse(state) {
             if (state === '0') {
                 console.log('ok');
                 this.$router.replace('/booking')
@@ -322,11 +333,19 @@ export default {
                 console.log('Cancel failed');
                 this.error_msg = 'Cancel failed';
             }
-       },
-       back() {
-            this.$router.replace('/activity')
-       }
-   }
+        },
+        back() {
+            if (this.fromSite === 'activity') {
+                this.$router.replace('/activity')
+            }
+            else if (this.fromSite === 'booking') {
+                this.$router.replace('/booking')
+            }
+            else {
+                this.$router.replace('/home')
+            }
+        }
+    }
 }
 </script>
 
@@ -348,5 +367,14 @@ export default {
 
 .v-tab {
     text-transform: none !important;
+}
+</style>
+
+<style scoped>
+.embed-card {
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    z-index: 2;
 }
 </style>
