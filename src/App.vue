@@ -22,7 +22,7 @@
             <link href="https://fonts.googleapis.com/css2?family=Material+Icons+Two+Tone"
                   rel="stylesheet">
             <!--img src="./assets/logo.png"-->
-            <router-view @Login="Login" @Save="Save" @Reserve="Reserve" @FetchRoomByTomeInterval="FetchRoomByTomeInterval" @CancelRoom="CancelRoom"/>
+            <router-view @Login="Login" @Save="Save" @Reserve="Reserve" @FetchRoomByTomeInterval="FetchRoomByTomeInterval" @CancelRoom="CancelRoom" @fetchRoomByActivity="fetchRoomByActivity"/>
       </div>
 </template>
 
@@ -76,6 +76,12 @@ export default {
                         else if (this.receiver_messages[i].Type === 'FETCHRDI') {
                               this.source_page.fetchRoomByTomeIntervalResponse(this.receiver_messages[i].SetDate, this.receiver_messages[i].Data);
                         }
+                        else if (this.receiver_messages[i].Type === 'CANCELROOM') {
+                              this.source_page.cancelResponse(this.receiver_messages[i].State);
+                        }
+                        else if (this.receiver_messages[i].Type === 'FetchRoomByActivity') {
+                              this.source_page.fetchRoomByActivityResponse(this.receiver_messages[i].Data);
+                        }
                   }
                   //console.log(this.receiver_messages)
             },
@@ -120,6 +126,15 @@ export default {
                   this.source_page = sourcePage;
                   console.log("send ");
                   let json_sf = JSON.stringify({Type: 'CANCELROOM', Date: roomInfo.date, TimeStart: roomInfo.timeStart, TimeEnd: roomInfo.timeEnd})
+                  console.log(json_sf);
+                  if(this.ws.readyState === 1) {
+                        this.ws.send(json_sf);
+                  }
+            },
+            fetchRoomByActivity(sourcePage) {
+                  this.source_page = sourcePage;
+                  console.log("send ");
+                  let json_sf = JSON.stringify({Type: 'FETCHRAC', DateAfter: (new Date(Date.now() - (new Date()).getTimezoneOffset() * 60000)).toISOString().substr(0, 10)})
                   console.log(json_sf);
                   if(this.ws.readyState === 1) {
                         this.ws.send(json_sf);

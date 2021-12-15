@@ -250,15 +250,15 @@ export default {
                 emailMatch: value => !value || /^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/.test(value.split(',')) || 'E-mail must be valid',
             },
             roomInfo: {
-                roomType: this.$router.params.roomType,
-                theme: this.$router.params.theme,
-                chairperson: this.$router.params.chairPerson,
-                date: this.$router.params.date,
-                timeStart: this.$router.params.timeStart,
-                timeEnd: this.$router.params.timeEnd,
-                emails: this.$router.params.invited,
-                agenda: this.$router.params.agenda,
-                notes: this.$router.params.note,
+                roomType: this.$router.params.roomInfo.roomType,
+                theme: this.$router.params.roomInfo.theme,
+                chairperson: this.$router.params.roomInfo.chairPerson,
+                date: this.$router.params.roomInfo.date,
+                timeStart: this.$router.params.roomInfo.timeStart,
+                timeEnd: this.$router.params.roomInfo.timeEnd,
+                emails: this.$router.params.roomInfo.invited,
+                agenda: this.$router.params.roomInfo.agenda,
+                notes: this.$router.params.roomInfo.note,
             },
             tab: null,
             items: [
@@ -313,8 +313,15 @@ export default {
                 this.$router.replace('/booking')
             }
        },
-       cancelResponse() {
-            this.$router.replace('/booking')
+       cancelResponse(state) {
+            if (state === '0') {
+                console.log('ok');
+                this.$router.replace('/booking')
+            }
+            else if (state === '1') {
+                console.log('Cancel failed');
+                this.error_msg = 'Cancel failed';
+            }
        },
        back() {
             this.$router.replace('/activity')
