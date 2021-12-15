@@ -243,6 +243,7 @@ export default {
             //console.log(this.$userName)
             let data = {
                 roomType: this.roomNames[this.roomTypeIndex] + (this.roomIndex+1).toString(),
+                chairPerson: this.$userName,
                 date: this.date,
                 timeStart: this.timeStart,
                 timeEnd: this.timeEnd

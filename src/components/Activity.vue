@@ -43,7 +43,7 @@
                         max-height="100%"
                         max-width="100%"
                         contain
-                        @click="check"
+                        @click="check(roomIndex)"
                     >
                     </v-img>
                 </v-card>
@@ -56,6 +56,18 @@
 export default {
     data () {
         return {
+            rooms: [
+                'RoomA1',
+                'RoomC2'
+            ],
+            themes: [
+                'Hello',
+                'World'
+            ],
+            chairPersons: [
+                'Lemon',
+                'Admin'
+            ],
             dates: [
                 (new Date(Date.now() - (new Date()).getTimezoneOffset() * 60000)).toISOString().substr(0, 10),
                 (new Date(Date.now() - (new Date()).getTimezoneOffset() * 60000)).toISOString().substr(0, 10),
@@ -68,9 +80,17 @@ export default {
                 '0900',
                 '1700'
             ],
-            rooms: [
-                'RoomA1',
-                'RoomC2'
+            inviteds: [
+                'b10815000@gapps.ntust.edu.tw',
+                'test@gmail.com'
+            ],
+            agendas: [
+                'I am a master of coding',
+                'XP'
+            ],
+            notes: [
+                'test',
+                '030'
             ],
             sort_f: 'date',
             sort_items: [{
@@ -92,8 +112,20 @@ export default {
                 this.sort_f = 'catagory'
             }
         },
-        check() {
-
+        check(roomIndex) {
+            let data = {
+                theme: this.themes[roomIndex],
+                chairPerson: this.chairPersons[roomIndex],
+                date: this.dates[roomIndex],
+                timeStart: this.timesStart[roomIndex],
+                timeEnd: this.timesEnd[roomIndex],
+                invited: this.inviteds[roomIndex],
+                agenda: this.agendas[roomIndex],
+                note: this.notes[roomIndex],
+                fromSite: 'activity'
+            };
+            this.$router.params = data
+            this.$router.replace('/activityWindow')
         }
    }
 }</script>

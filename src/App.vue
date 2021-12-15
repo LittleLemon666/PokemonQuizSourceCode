@@ -22,7 +22,7 @@
             <link href="https://fonts.googleapis.com/css2?family=Material+Icons+Two+Tone"
                   rel="stylesheet">
             <!--img src="./assets/logo.png"-->
-            <router-view @Login="Login" @Save="Save" @Reserve="Reserve" @FetchRoomByTomeInterval="FetchRoomByTomeInterval"/>
+            <router-view @Login="Login" @Save="Save" @Reserve="Reserve" @FetchRoomByTomeInterval="FetchRoomByTomeInterval" @CancelRoom="CancelRoom"/>
       </div>
 </template>
 
@@ -110,7 +110,16 @@ export default {
             FetchRoomByTomeInterval(sourcePage, dateBegin, dateEnd, timeBegin, timeEnd) {
                   this.source_page = sourcePage;
                   console.log("send ");
-                  let json_sf = JSON.stringify({Type: 'FETCHRDI', DateBegin: dateBegin, DateEnd: dateEnd, TimeBegin: timeBegin, TimeEnd: timeEnd})
+                  let json_sf = JSON.stringify({Type: 'FETCHRDI', DateBegin: dateBegin, DateEnd: dateEnd, TimeStart: timeBegin, TimeEnd: timeEnd})
+                  console.log(json_sf);
+                  if(this.ws.readyState === 1) {
+                        this.ws.send(json_sf);
+                  }
+            },
+            CancelRoom(sourcePage, roomInfo) {
+                  this.source_page = sourcePage;
+                  console.log("send ");
+                  let json_sf = JSON.stringify({Type: 'CANCELROOM', Date: roomInfo.date, TimeStart: roomInfo.timeStart, TimeEnd: roomInfo.timeEnd})
                   console.log(json_sf);
                   if(this.ws.readyState === 1) {
                         this.ws.send(json_sf);

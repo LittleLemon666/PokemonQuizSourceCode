@@ -14,7 +14,7 @@
                         <v-subheader>Chairperson</v-subheader>
                     </v-col>
                     <v-col cols="8">
-                        <v-text-field v-model="roomInfo.chairperson"></v-text-field>
+                        <v-text-field readonly v-model="roomInfo.chairperson"></v-text-field>
                     </v-col>
                 </v-row>
                 <v-row>
@@ -182,7 +182,8 @@
                 </v-row>
                 <p v-show="error_msg!==''" v-text="error_msg"></p>
                 <v-layout justify-center rowb>
-                    <el-button type = "primary" style = "width:30%;" @click = "submit">Submit</el-button>
+                    <el-button type = "primary" style = "width:30%;" @click = "submit" v-show="fromSite!=='activity'">Submit</el-button>
+                    <el-button type = "primary" style = "width:30%;" @click = "back" v-show="fromSite==='activity'">Return</el-button>
                     <v-dialog
                         v-model="dialog"
                         persistent
@@ -195,6 +196,7 @@
                             style = "width:30%;"
                             v-bind="attrs"
                             v-on="on"
+                            v-show="roomInfo.chairperson===$userName"
                             >
                             Cancel
                             </v-btn>
@@ -249,14 +251,14 @@ export default {
             },
             roomInfo: {
                 roomType: this.$router.params.roomType,
-                theme: '',
-                chairperson: this.$userName,
+                theme: this.$router.params.theme,
+                chairperson: this.$router.params.chairPerson,
                 date: this.$router.params.date,
                 timeStart: this.$router.params.timeStart,
                 timeEnd: this.$router.params.timeEnd,
-                emails: '',
-                agenda: '',
-                notes: '',
+                emails: this.$router.params.invited,
+                agenda: this.$router.params.agenda,
+                notes: this.$router.params.note,
             },
             tab: null,
             items: [
@@ -268,6 +270,7 @@ export default {
             dialog: false,
             selected: this.value,
             error_msg: '',
+            fromSite: this.$router.params.fromSite,
         }
     },
     methods: {
@@ -301,9 +304,21 @@ export default {
             }
        },
        cancel () {
-            this.dialog = false,
+            if (this.fromSite === 'activity') {
+                this.dialog = false
+                console.log('cancel the meeting')
+                this.$emit('CancelRoom', this, this.roomInfo)
+            }
+            else {
+                this.$router.replace('/booking')
+            }
+       },
+       cancelResponse() {
             this.$router.replace('/booking')
        },
+       back() {
+            this.$router.replace('/activity')
+       }
    }
 }
 </script>
