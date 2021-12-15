@@ -142,12 +142,14 @@ export default {
         },
         settingAction(action){
             if (action === 'user'){
+                this.$router.params.fromSite = '';
                 this.$router.replace('signup').catch(()=>{})
                 this.web_at = 'Home'
             }
             else if (action === 'logout'){
-                this.$router.replace('home').catch(()=>{})
-                this.web_at = 'Home'
+                this.$emit('Logout', this, this.$userName)
+                this.$router.replace('login').catch(()=>{})
+                this.web_at = 'Login'
             }
         },
         FetchRoomByTomeInterval(sourcePage, dateBegin, dateEnd, timeBegin, timeEnd) {

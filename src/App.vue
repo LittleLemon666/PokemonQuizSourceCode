@@ -22,7 +22,7 @@
             <link href="https://fonts.googleapis.com/css2?family=Material+Icons+Two+Tone"
                   rel="stylesheet">
             <!--img src="./assets/logo.png"-->
-            <router-view @Login="Login" @Save="Save" @Reserve="Reserve" @Saving="Saving" @FetchRoomByTomeInterval="FetchRoomByTomeInterval" @CancelRoom="CancelRoom" @fetchRoomByActivity="fetchRoomByActivity"/>
+            <router-view @Login="Login" @Logout="Logout" @Save="Save" @Reserve="Reserve" @Saving="Saving" @FetchRoomByTomeInterval="FetchRoomByTomeInterval" @CancelRoom="CancelRoom" @fetchRoomByActivity="fetchRoomByActivity"/>
       </div>
 </template>
 
@@ -97,10 +97,23 @@ export default {
                         this.ws.send(json_sf);
                   }
             },
-            Save(sourcePage, userMail, account, firstName, secondName, password) {
+            Logout(sourcePage, userAccount) {
                   this.source_page = sourcePage;
                   console.log("send ");
-                  let json_sf = JSON.stringify({Type: 'REGISTER', UserMail: userMail, Account: account, FirstName: firstName, SecondName: secondName, Password: password})
+                  let json_sf = JSON.stringify({Type: 'LOGOUT', User: userAccount})
+                  console.log(json_sf);
+                  if(this.ws.readyState === 1) {
+                        this.ws.send(json_sf);
+                  }
+            },
+            Save(sourcePage, userMail, account, firstName, secondName, password, fromSite) {
+                  this.source_page = sourcePage;
+                  console.log("send ");
+                  let json_sf = ''
+                  if (fromSite === 'login')
+                        json_sf = JSON.stringify({Type: 'REGISTER', UserMail: userMail, Account: account, FirstName: firstName, SecondName: secondName, Password: password})
+                  else
+                        json_sf = JSON.stringify({Type: 'EDITUSER', Account: account, FirstName: firstName, SecondName: secondName, Password: password})
                   console.log(json_sf);
                   if(this.ws.readyState === 1) {
                         this.ws.send(json_sf);

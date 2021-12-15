@@ -190,7 +190,7 @@
                 <p v-show="error_msg!==''" v-text="error_msg"></p>
                 <v-layout justify-center rowb>
                     <el-button type = "primary" style = "width:30%;" @click = "submit" v-show="fromSite!=='activity'">Submit</el-button>
-                    <el-button type = "primary" style = "width:30%;" @click = "saveInfo" v-show="fromSite==='activity'&&roomInfo.chairperson===$userName">Save</el-button>
+                    <el-button type = "primary" style = "width:30%;" @click = "saveInfo" v-show="fromSite==='activity'&&roomInfo.chairperson===$email">Save</el-button>
                     <v-dialog
                         v-model="dialog"
                         persistent

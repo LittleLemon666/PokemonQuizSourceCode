@@ -52,6 +52,7 @@
                         label="E-mail"
                         value=""
                         v-model="userMail"
+                        :readonly="fromSite!=='login'"
                         error
                     ></v-text-field>
                 </v-col>
@@ -92,12 +93,13 @@ export default {
                 confirm: value => (value === this.password) || 'Must same as password',
                 emailMatch: v => !v || /^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/.test(v) || 'E-mail must be valid',
             },
+            fromSite: this.$router.params.fromSite,
             error_msg: ''
         }
     },
     methods: {
         save() {
-            this.$emit('Save', this, this.userMail, this.account, this.firstName, this.secondName, this.password)
+            this.$emit('Save', this, this.userMail, this.account, this.firstName, this.secondName, this.password, this.fromSite)
             //this.saveResponse('3') // for test
             // this.connect('ws://' + location.host + '/socket/websocket/030', { format: 'json' })
         },

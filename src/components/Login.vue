@@ -105,7 +105,10 @@ export default {
             }
         },
         signup() {
-            //this.$route.params.site_from = 'fromLogin'
+            let data = {
+                fromSite: 'login'
+            }
+            this.$router.params = data;
             this.$router.replace('/signup');
         }
     }
