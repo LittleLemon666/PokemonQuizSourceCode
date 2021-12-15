@@ -73,6 +73,9 @@ export default {
                         else if (this.receiver_messages[i].Type === 'RENTROOM') {
                               this.source_page.reserveResponse(this.receiver_messages[i].State);
                         }
+                        else if (this.receiver_messages[i].Type === 'FETCHRDI') {
+                              this.source_page.fetchRoomByTomeIntervalResponse(this.receiver_messages[i].SetDate, this.receiver_messages[i].Data);
+                        }
                   }
                   //console.log(this.receiver_messages)
             },

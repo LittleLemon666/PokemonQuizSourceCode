@@ -105,7 +105,7 @@
             <v-row>
                 <v-card flat color="light-blue lighten-5" class="ma-10" width="40%" height="40%" v-for="(person, personIndex) in persons[roomIndex]" :key="(person, personIndex)">
                     <v-img
-                        :class="{'row-pointer': !isBooked[roomIndex][personIndex], 'booked-room': isBooked[roomIndex][personIndex]}"
+                        :class="{'row-pointer': !persons[roomIndex][personIndex], 'booked-room': persons[roomIndex][personIndex]}"
                         :alt="room + (personIndex+1).toString()"
                         :src="require('../assets/RoomPhotos/' + room + (personIndex+1).toString() + '.jpg')"
                         max-height="100%"
@@ -216,21 +216,6 @@ export default {
                     '123',
                 ],
             ],
-            isBooked: [
-                [
-                    false,
-                    true,
-                    false,
-                ],
-                [
-                    false,
-                    false,
-                ],
-                [
-                    true,
-                    true,
-                ],
-            ],
             menuVisible: false,
             tab: null,
             items: [
@@ -250,7 +235,7 @@ export default {
                 this.x = event.clientX;
                 this.y = event.clientY;
             }
-            if (!this.isBooked[this.roomTypeIndex][this.roomIndex]) {
+            if (!this.persons[this.roomTypeIndex][this.roomIndex]) {
                 this.menuVisible = true;
             }
         },
@@ -268,6 +253,12 @@ export default {
         },
         changeTime() {
             this.$emit('FetchRoomByTomeInterval', this, this.dateBegin, this.dateEnd, this.timeStart, this.timeEnd)
+        },
+        fetchRoomByTomeIntervalResponse(setDate, data) {
+            for (let index = 0; index < data.length; index++)
+            {
+                persons[roomNames.indexOf(data[index].Room)][data[index].RoomIndex] = data[index].User;
+            }
         }
     }
 }</script>
