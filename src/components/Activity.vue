@@ -127,26 +127,21 @@ export default {
             this.$emit('fetchRoomByActivity', this)
         },
         fetchRoomByActivityResponse(data) {
-            this.roomsInfo.rooms = []
-            this.roomsInfo.themes = []
-            this.roomsInfo.chairPersons = []
-            this.roomsInfo.dates = []
-            this.roomsInfo.timesStart = []
-            this.roomsInfo.timesEnd = []
-            this.roomsInfo.agendas = []
-            this.roomsInfo.notes = []
+            this.roomsInfo = []
             for (let index = 0; index < data.length; index++) {
-                this.roomsInfo.rooms.push(data[index].Room)
-                this.roomsInfo.themes.push(data[index].Theme)
-                this.roomsInfo.chairPersons.push(data[index].ChairPerson)
-                this.roomsInfo.dates.push(data[index].Date)
-                this.roomsInfo.timesStart.push(data[index].TimeStart)
-                this.roomsInfo.timesEnd.push(data[index].TimeEnd)
-                this.roomsInfo.agendas.push(data[index].Agenda)
-                this.roomsInfo.notes.push(data[index].Note)
+                let roomsInfo = {
+                    room: data[index].Room,
+                    theme: data[index].Theme,
+                    chairPerson: data[index].ChairPerson,
+                    invited: data[index].Invites,
+                    date: data[index].Date,
+                    timeStart: data[index].TimeStart,
+                    timeEnd: data[index].TimeEnd,
+                    agenda: data[index].Agenda,
+                    note: data[index].Note
+                }
+                roomsInfo.push(roomsInfo)
             }
-
-            //sortRoom()
         },
         settingAction(action) {
             if (action === 'date') {
@@ -155,8 +150,6 @@ export default {
             else if (action === 'catagory') {
                 this.sort_f = 'catagory'
             }
-
-            //sortRoom()
         },
         check(roomIndex) {
             let data = {
