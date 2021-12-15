@@ -180,6 +180,7 @@
                         <v-text-field v-model = "roomInfo.notes" label="Notes for self"></v-text-field>
                     </v-col>
                 </v-row>
+                <p v-show="error_msg!==''" v-text="error_msg"></p>
                 <v-layout justify-center rowb>
                     <el-button type = "primary" style = "width:30%;" @click = "submit">Submit</el-button>
                     <v-dialog
@@ -221,8 +222,6 @@
                         </v-card>
                     </v-dialog>
                 </v-layout>
-
-               
             </v-container>
         </v-form>
     </div>
@@ -268,6 +267,7 @@ export default {
             menu_visible2: false,
             dialog: false,
             selected: this.value,
+            error_msg: '',
         }
     },
     methods: {
@@ -275,6 +275,30 @@ export default {
             //this.$router.replace('/login')
             console.log(this.roomInfo)
             this.$emit('Reserve', this, this.roomInfo)
+       },
+       reserveResponse(state) {
+            console.log(state);
+            this.error_msg = '';
+            if (state === '0') {
+                console.log('ok');
+                this.$router.replace('/activity');
+            }
+            else if (state === '1') {
+                console.log('room hasbeen rent');
+                this.error_msg = 'room hasbeen rent';
+            }
+            else if (state === '2') {
+                console.log('room hasn\'t been released');
+                this.error_msg = 'room hasn\'t been released';
+            }
+            else if (state === '3') {
+                console.log('time or date can\'t be empty');
+                this.error_msg = 'time or date can\'t be empty';
+            }
+            else if (state === '5') {
+                console.log('U R NOT LOGIN');
+                this.$router.replace('/login');
+            }
        },
        cancel () {
             this.dialog = false,

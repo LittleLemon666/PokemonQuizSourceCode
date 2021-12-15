@@ -69,7 +69,10 @@ export default {
                         }
                         else if (this.receiver_messages[i].Type === 'REGISTER') {
                               this.source_page.saveResponse(this.receiver_messages[i].State);
-                        } 
+                        }
+                        else if (this.receiver_messages[i].Type === 'RENTROOM') {
+                              this.source_page.reserveResponse(this.receiver_messages[i].State);
+                        }
                   }
                   //console.log(this.receiver_messages)
             },
@@ -95,7 +98,7 @@ export default {
                   this.source_page = sourcePage;
                   let invites = roomInfo.emails.split(',');
                   console.log("send ");
-                  let json_sf = JSON.stringify({Type: 'RENTROOM', Room: roomInfo.roomType, User: this.$userName, Theme: roomInfo.theme, Chairperson: roomInfo.chairperson, Date: roomInfo.date, TimeStart: roomInfo.timeStart, TimeEnd: roomInfo.timeEnd, Invites: invites, Agenda: roomInfo.agenda, Note: roomInfo.notes})
+                  let json_sf = JSON.stringify({Type: 'RENTROOM', Room: roomInfo.roomType, Theme: roomInfo.theme, Chairperson: roomInfo.chairperson, Date: roomInfo.date, TimeStart: roomInfo.timeStart, TimeEnd: roomInfo.timeEnd, Invites: invites, Agenda: roomInfo.agenda, Note: roomInfo.notes})
                   console.log(json_sf);
                   if(this.ws.readyState === 1) {
                         this.ws.send(json_sf);
