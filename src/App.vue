@@ -97,14 +97,10 @@ export default {
                         this.ws.send(json_sf);
                   }
             },
-            Logout(sourcePage, userAccount) {
-                  this.source_page = sourcePage;
-                  console.log("send ");
-                  let json_sf = JSON.stringify({Type: 'LOGOUT', User: userAccount})
-                  console.log(json_sf);
-                  if(this.ws.readyState === 1) {
-                        this.ws.send(json_sf);
-                  }
+            Logout() {
+                  this.ws.close();
+                  this.ws = null;
+                  this.connectToWebsocket();
             },
             Save(sourcePage, userMail, account, firstName, secondName, password, fromSite) {
                   this.source_page = sourcePage;

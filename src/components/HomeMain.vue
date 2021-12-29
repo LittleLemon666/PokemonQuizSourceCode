@@ -147,7 +147,7 @@ export default {
                 this.web_at = 'Home'
             }
             else if (action === 'logout'){
-                this.$emit('Logout', this, this.$userName)
+                this.$emit('Logout')
                 this.$router.replace('login').catch(()=>{})
                 this.web_at = 'Login'
             }
