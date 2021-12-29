@@ -111,6 +111,7 @@
                         max-height="100%"
                         max-width="100%"
                         contain
+                        v-show="inTime(timesStart[roomIndex][personIndex], timesEnd[roomIndex][personIndex])"
                         @click="getID(roomIndex, personIndex); Popmenu($event)"
                     >
                         <v-card class="embed-card" flat color="light-blue lighten-5" position="bottom right">
@@ -216,6 +217,36 @@ export default {
                     '123',
                 ],
             ],
+            timesStart: [
+                [
+                    '0700',
+                    '0900',
+                    '0700'
+                ],
+                [
+                    '1000',
+                    '1300',
+                ],
+                [
+                    '1500',
+                    '1300',
+                ],
+            ],
+            timesEnd: [
+                [
+                    '1100',
+                    '1100',
+                    '0900'
+                ],
+                [
+                    '1100',
+                    '1500',
+                ],
+                [
+                    '1700',
+                    '1400',
+                ],
+            ],
             menuVisible: false,
             tab: null,
             items: [
@@ -259,13 +290,18 @@ export default {
             this.$router.replace('/activityWindow')
         },
         changeTime() {
-            this.$emit('FetchRoomByTomeInterval', this, this.dateBegin, this.dateEnd, this.timeStart, this.timeEnd)
+            this.$emit('FetchRoomByDateInterval', this, this.dateBegin, this.dateEnd)
         },
-        fetchRoomByTomeIntervalResponse(setDate, data) {
+        fetchRoomByDateIntervalResponse(setDate, data) {
             for (let index = 0; index < data.length; index++)
             {
                 persons[roomNames.indexOf(data[index].Room)][data[index].RoomIndex] = data[index].User;
+                timesStart[roomNames.indexOf(data[index].Room)][data[index].RoomIndex] = data[index].TimeStart;
+                timesEnd[roomNames.indexOf(data[index].Room)][data[index].RoomIndex] = data[index].TimeEnd;
             }
+        },
+        inTime(s, e) {
+            return (parseInt(s) >= parseInt(this.timeStart) && parseInt(e) <= parseInt(this.timeEnd))
         }
     }
 }</script>

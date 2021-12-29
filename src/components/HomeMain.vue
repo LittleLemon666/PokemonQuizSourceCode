@@ -103,7 +103,7 @@
         </v-app-bar>
 
         <v-main>
-            <router-view @FetchRoomByTomeInterval="FetchRoomByTomeInterval" @fetchRoomByActivity="fetchRoomByActivity"></router-view>
+            <router-view @FetchRoomByDateInterval="FetchRoomByDateInterval" @fetchRoomByActivity="fetchRoomByActivity"></router-view>
         </v-main>
     </v-app>
 </template> 
@@ -152,8 +152,8 @@ export default {
                 this.web_at = 'Login'
             }
         },
-        FetchRoomByTomeInterval(sourcePage, dateBegin, dateEnd, timeBegin, timeEnd) {
-            this.$emit('FetchRoomByTomeInterval', sourcePage, dateBegin, dateEnd, timeBegin, timeEnd)
+        FetchRoomByDateInterval(sourcePage, dateBegin, dateEnd) {
+            this.$emit('FetchRoomByDateInterval', sourcePage, dateBegin, dateEnd)
         },
         fetchRoomByActivity(sourcePage) {
             this.$emit('fetchRoomByActivity', sourcePage)

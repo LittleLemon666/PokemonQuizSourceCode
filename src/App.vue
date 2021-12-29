@@ -22,7 +22,7 @@
             <link href="https://fonts.googleapis.com/css2?family=Material+Icons+Two+Tone"
                   rel="stylesheet">
             <!--img src="./assets/logo.png"-->
-            <router-view @Login="Login" @Logout="Logout" @Save="Save" @Reserve="Reserve" @Saving="Saving" @FetchRoomByTomeInterval="FetchRoomByTomeInterval" @CancelRoom="CancelRoom" @fetchRoomByActivity="fetchRoomByActivity"/>
+            <router-view @Login="Login" @Logout="Logout" @Save="Save" @Reserve="Reserve" @Saving="Saving" @FetchRoomByDateInterval="FetchRoomByDateInterval" @CancelRoom="CancelRoom" @fetchRoomByActivity="fetchRoomByActivity"/>
       </div>
 </template>
 
@@ -83,7 +83,7 @@ export default {
                               this.source_page.cancelResponse(this.receiver_messages[i].State);
                         }
                         else if (this.receiver_messages[i].Type === 'FetchRoomByActivity') {
-                              this.source_page.fetchRoomByActivityResponse(this.receiver_messages[i].Data);
+                              this.source_page.fetchRoomByDateIntervalResponse(this.receiver_messages[i].Data);
                         }
                   }
                   //console.log(this.receiver_messages)
@@ -141,10 +141,10 @@ export default {
                         this.ws.send(json_sf);
                   }
             },
-            FetchRoomByTomeInterval(sourcePage, dateBegin, dateEnd, timeBegin, timeEnd) {
+            FetchRoomByDateInterval(sourcePage, dateBegin, dateEnd) {
                   this.source_page = sourcePage;
                   console.log("send ");
-                  let json_sf = JSON.stringify({Type: 'FETCHRDI', DateBegin: dateBegin, DateEnd: dateEnd, TimeStart: timeBegin, TimeEnd: timeEnd})
+                  let json_sf = JSON.stringify({Type: 'FETCHRDI', DateBegin: dateBegin, DateEnd: dateEnd})
                   console.log(json_sf);
                   if(this.ws.readyState === 1) {
                         this.ws.send(json_sf);
