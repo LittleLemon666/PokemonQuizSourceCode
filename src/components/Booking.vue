@@ -292,7 +292,7 @@ export default {
         changeTime() {
             this.$emit('FetchRoomByDateInterval', this, this.dateBegin, this.dateEnd)
         },
-        fetchRoomByDateIntervalResponse(setDate, data) {
+        fetchRoomByDateIntervalResponse(data) {
             for (let index = 0; index < data.length; index++)
             {
                 persons[roomNames.indexOf(data[index].Room)][data[index].RoomIndex] = data[index].User;

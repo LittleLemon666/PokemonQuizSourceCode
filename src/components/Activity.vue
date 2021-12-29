@@ -58,6 +58,7 @@ export default {
         return {
             roomsInfo: [
                 {
+                    RUID: '??',
                     room: 'RoomC2',
                     theme: 'Hello',
                     chairPerson: 'ntust@gamil.com',
@@ -69,6 +70,7 @@ export default {
                     note: 'test'
                 },
                 {
+                    RUID: '???',
                     room: 'RoomA1',
                     theme: 'World',
                     chairPerson: 'b10815000@gapps.ntust.edu.tw',
@@ -130,6 +132,7 @@ export default {
             this.roomsInfo = []
             for (let index = 0; index < data.length; index++) {
                 let roomsInfo = {
+                    RUID: data[index].RUID,
                     room: data[index].Room,
                     theme: data[index].Theme,
                     chairPerson: data[index].ChairPerson,

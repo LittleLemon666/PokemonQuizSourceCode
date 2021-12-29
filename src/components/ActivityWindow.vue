@@ -257,6 +257,7 @@ export default {
                 emailMatch: value => !value || /^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/.test(value.split(',')) || 'E-mail must be valid',
             },
             roomInfo: {
+                RUID: this.$router.params.roomInfo.RUID,
                 roomType: this.$router.params.roomInfo.roomType,
                 theme: this.$router.params.roomInfo.theme,
                 chairperson: this.$router.params.roomInfo.chairPerson,
@@ -333,7 +334,7 @@ export default {
                 console.log('Cancel failed');
                 this.error_msg = 'Cancel failed';
             }
-            else if (state === '5') {
+            else if (state === '87') {
                 console.log('U R NOT LOGIN');
                 this.$router.replace('/login');
             }

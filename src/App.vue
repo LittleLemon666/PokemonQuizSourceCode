@@ -76,17 +76,17 @@ export default {
                         else if (this.receiver_messages[i].Type === 'RENTROOM') {
                               this.source_page.reserveResponse(this.receiver_messages[i].State);
                         }
-                        else if (this.receiver_messages[i].Type === 'EDITROOM') {
+                        else if (this.receiver_messages[i].Type === 'EDITRBUID') {
                               this.source_page.saveInfoResponse(this.receiver_messages[i].State);
                         }
                         else if (this.receiver_messages[i].Type === 'FETCHRDI') {
-                              this.source_page.fetchRoomByTomeIntervalResponse(this.receiver_messages[i].SetDate, this.receiver_messages[i].Data);
+                              this.source_page.fetchRoomByDateIntervalResponse(this.receiver_messages[i].Data);
                         }
-                        else if (this.receiver_messages[i].Type === 'CANCELROOM') {
+                        else if (this.receiver_messages[i].Type === 'CANCELRBUID') {
                               this.source_page.cancelResponse(this.receiver_messages[i].State);
                         }
-                        else if (this.receiver_messages[i].Type === 'FetchRoomByActivity') {
-                              this.source_page.fetchRoomByDateIntervalResponse(this.receiver_messages[i].Data);
+                        else if (this.receiver_messages[i].Type === 'FETCHRAC') {
+                              this.source_page.fetchRoomByActivityResponse(this.receiver_messages[i].Data);
                         }
                   }
                   //console.log(this.receiver_messages)
@@ -134,7 +134,7 @@ export default {
                   this.source_page = sourcePage;
                   let invites = roomInfo.emails.split(',');
                   console.log("send ");
-                  let json_sf = JSON.stringify({Type: 'EDITROOM', Room: roomInfo.roomType, Theme: roomInfo.theme, Chairperson: roomInfo.chairperson, Date: roomInfo.date, TimeStart: roomInfo.timeStart, TimeEnd: roomInfo.timeEnd, Invites: invites, Agenda: roomInfo.agenda, Note: roomInfo.notes})
+                  let json_sf = JSON.stringify({Type: 'EDITRBUID', Room: roomInfo.roomType, RUID: roomInfo.RUID, Theme: roomInfo.theme, Chairperson: roomInfo.chairperson, Date: roomInfo.date, TimeStart: roomInfo.timeStart, TimeEnd: roomInfo.timeEnd, Invites: invites, Agenda: roomInfo.agenda, Note: roomInfo.notes})
                   console.log(json_sf);
                   if(this.ws.readyState === 1) {
                         this.ws.send(json_sf);
@@ -152,7 +152,7 @@ export default {
             CancelRoom(sourcePage, roomInfo) {
                   this.source_page = sourcePage;
                   console.log("send ");
-                  let json_sf = JSON.stringify({Type: 'CANCELROOM', Date: roomInfo.date, TimeStart: roomInfo.timeStart, TimeEnd: roomInfo.timeEnd})
+                  let json_sf = JSON.stringify({Type: 'CANCELRBUID', RUID: roomInfo.RUID})
                   console.log(json_sf);
                   if(this.ws.readyState === 1) {
                         this.ws.send(json_sf);
