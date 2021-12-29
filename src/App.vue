@@ -70,6 +70,9 @@ export default {
                         else if (this.receiver_messages[i].Type === 'REGISTER') {
                               this.source_page.saveResponse(this.receiver_messages[i].State);
                         }
+                        else if (this.receiver_messages[i].Type === 'USEREDIT') {
+                              this.source_page.editResponse(this.receiver_messages[i].State);
+                        }
                         else if (this.receiver_messages[i].Type === 'RENTROOM') {
                               this.source_page.reserveResponse(this.receiver_messages[i].State);
                         }
@@ -109,7 +112,7 @@ export default {
                   if (fromSite === 'login')
                         json_sf = JSON.stringify({Type: 'REGISTER', UserMail: userMail, Account: account, FirstName: firstName, SecondName: secondName, Password: password})
                   else
-                        json_sf = JSON.stringify({Type: 'EDITUSER', Account: account, FirstName: firstName, SecondName: secondName, Password: password})
+                        json_sf = JSON.stringify({Type: 'USEREDIT', FirstName: firstName, SecondName: secondName, Password: password})
                   console.log(json_sf);
                   if(this.ws.readyState === 1) {
                         this.ws.send(json_sf);
