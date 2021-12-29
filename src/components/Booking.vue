@@ -256,6 +256,9 @@ export default {
             y: 0
         };
     },
+    beforeMount() {
+        this.changeTime()
+    },
     methods: {
         getID (roomIndex, personIndex) {
             this.roomTypeIndex = roomIndex;
