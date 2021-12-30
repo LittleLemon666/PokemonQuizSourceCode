@@ -171,42 +171,24 @@ export default {
     methods: {
         fetchRoomByActivity() {
             this.$emit('fetchRoomByActivity', this)
-            this.fetchRoomByActivityResponse(this) //test
         },
         fetchRoomByActivityResponse(data) {
-            // this.roomsInfo = []
-            // for (let index = 0; index < data.length; index++) {
-            //     let roomsInfo = {
-            //         RUID: data[index].RUID,
-            //         room: data[index].Room,
-            //         theme: data[index].Theme,
-            //         chairPerson: data[index].ChairPerson,
-            //         invited: data[index].Invites,
-            //         date: data[index].Date,
-            //         timeStart: data[index].TimeStart,
-            //         timeEnd: data[index].TimeEnd,
-            //         agenda: data[index].Agenda,
-            //         note: data[index].Note
-            //     }
-            //     roomsInfo.push(roomsInfo)
-            // }
-
-            let roomdata = {
-                roomInfo: {
-                    RUID: this.roomsInfo[0].RUID,
-                    roomType: this.roomsInfo[0].room,
-                    theme: this.roomsInfo[0].theme,
-                    chairPerson: this.roomsInfo[0].chairPerson,
-                    date: this.roomsInfo[0].date,
-                    timeStart: this.roomsInfo[0].timeStart,
-                    timeEnd: this.roomsInfo[0].timeEnd,
-                    emails: this.roomsInfo[0].invited,
-                    agenda: this.roomsInfo[0].agenda,
-                    notes: this.roomsInfo[0].note
-                },
-                fromSite: 'home'
-            };
-            this.$router.params = roomdata
+            this.roomsInfo = []
+            for (let index = 0; index < data.length; index++) {
+                let roomsInfo = {
+                    RUID: data[index].RUID,
+                    room: data[index].Room,
+                    theme: data[index].Theme,
+                    chairPerson: data[index].ChairPerson,
+                    invited: data[index].Invites,
+                    date: data[index].Date,
+                    timeStart: data[index].TimeStart,
+                    timeEnd: data[index].TimeEnd,
+                    agenda: data[index].Agenda,
+                    note: data[index].Note
+                }
+                roomsInfo.push(roomsInfo)
+            }
         },
         functionEvents (date) {
             const [,, day] = date.split('-')
