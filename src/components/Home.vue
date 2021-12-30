@@ -1,10 +1,19 @@
 <template>
+    <v-col>    
     <v-layout justify-end rowc>
         <!-- <v-main>
             <router-view></router-view>
         </v-main> -->
-        <v-form class = "demo-ruleForm login-container">
-        <v-container style="margin: 10px; padding: 10px;" outlier>
+        <v-form class="login-container">
+            <v-container style="margin: 10px; padding: 10px;" outlier>
+                <v-row>
+                    <v-col cols="2">
+                        <v-subheader>Place</v-subheader>
+                    </v-col>
+                    <v-col cols="8">
+                        <v-text-field readonly v-model="roomsInfo[0].room"></v-text-field>
+                    </v-col>
+                </v-row>
                 <v-row>
                     <v-col cols="12">
                         <v-text-field readonly label="Theme" v-model="roomsInfo[0].theme"></v-text-field>
@@ -48,19 +57,6 @@
                 </v-row>
                 <v-spacer></v-spacer>
                 <v-row>
-                    <v-col cols="8" sm="6" md="3">
-                        <v-subheader>Invited</v-subheader>
-                    </v-col>
-                    <v-col cols="8">
-                        <v-text-field 
-                            name="input-E-mail"
-                            v-model="roomsInfo[0].invited"
-                            value=""
-                            readonly
-                        ></v-text-field> <!--multiple--> 
-                    </v-col>
-                </v-row>
-                <v-row>
                     <v-textarea
                         label="Agenda"
                         v-model = "roomsInfo[0].agenda"
@@ -72,11 +68,11 @@
                 </v-row>
                 <v-row>
                     <v-col cols="12">
-                        <v-text-field v-show="roomsInfo[0].chairperson===$email" v-model = "roomsInfo[0].notes" label="Notes for self"></v-text-field>
+                        <v-text-field v-show="roomsInfo[0].chairPerson===$email" readonly v-model = "roomsInfo[0].note" label="Notes for self"></v-text-field>
                     </v-col>
                 </v-row>
             </v-container>
-    </v-form>
+        </v-form>
 
         <v-col
             cols="12"
@@ -90,10 +86,83 @@
             width="100%"
             :event-color="date => date[9] % 2 ? 'red' : 'yellow'"
             :events="functionEvents"
+            @click:date="onDateEvent"
         >
         </v-date-picker>
         </v-col>
     </v-layout>
+    <v-layout class="login-container" v-show="showInfos" justify-end rowd v-for="(roomInfo, roomIndex) in roomsInfoShow" :key="(roomInfo, roomIndex)">
+        <v-form>
+            <v-container style="margin: 10px; padding: 10px;" outlier>
+                <v-row>
+                    <v-col cols="2">
+                        <v-subheader>Place</v-subheader>
+                    </v-col>
+                    <v-col cols="8">
+                        <v-text-field readonly v-model="roomInfo.room"></v-text-field>
+                    </v-col>
+                </v-row>
+                <v-row>
+                    <v-col cols="12">
+                        <v-text-field readonly label="Theme" v-model="roomInfo.theme"></v-text-field>
+                    </v-col>
+                </v-row>
+                <v-row>
+                    <v-col cols="3">
+                        <v-subheader>Chairperson</v-subheader>
+                    </v-col>
+                    <v-col cols="8">
+                        <v-text-field readonly v-model="roomInfo.chairPerson"></v-text-field>
+                    </v-col>
+                </v-row>
+                <v-row>
+                    <v-col cols="2">
+                        <v-subheader>Time</v-subheader>
+                    </v-col>
+                    <v-col cols="4">
+                        <v-text-field
+                            v-model="roomInfo.date"
+                            readonly
+                        ></v-text-field>
+                        <v-text-field
+                            v-model="roomInfo.timeStart"
+                            readonly
+                        ></v-text-field>
+                    </v-col>
+                    <v-col cols="1">
+                        <v-subheader>~</v-subheader>
+                    </v-col>
+                    <v-col cols="4">
+                        <v-text-field
+                            v-model="roomInfo.date"
+                            readonly
+                        ></v-text-field>
+                        <v-text-field
+                            v-model="roomInfo.timeEnd"
+                            readonly
+                        ></v-text-field>
+                    </v-col>
+                </v-row>
+                <v-spacer></v-spacer>
+                <v-row>
+                    <v-textarea
+                        label="Agenda"
+                        v-model = "roomInfo.agenda"
+                        auto-grow
+                        outlined
+                        row-height="25"
+                        readonly
+                    ></v-textarea>
+                </v-row>
+                <v-row>
+                    <v-col cols="12">
+                        <v-text-field v-show="roomInfo.chairPerson===$email" readonly v-model = "roomInfo.note" label="Notes for self"></v-text-field>
+                    </v-col>
+                </v-row>
+            </v-container>
+        </v-form>
+    </v-layout>
+    </v-col>    
 </template> 
 
 <script>
@@ -128,7 +197,8 @@ export default {
             ],
             arrayEvents: null,
             dates: (new Date(Date.now() - (new Date()).getTimezoneOffset() * 60000)).toISOString().substr(0, 10),
-        
+            showInfos: false,
+            roomsInfoShow: []
             // attributes: [
             //     {
             //         bar: {
@@ -191,15 +261,55 @@ export default {
             }
         },
         functionEvents (date) {
-            const [,, day] = date.split('-')
-            if ([12, 17, 28].includes(parseInt(day, 10))) return true
-            if ([1, 19, 22].includes(parseInt(day, 10))) return ['red', '#00f']
+            let pointShow = false
+            let returnPoints = []
+            for (let index = 0; index < this.roomsInfo.length; index++)
+            {
+                if (this.roomsInfo[index].date == date)
+                {
+                    pointShow = true
+                    returnPoints.push('red')
+                } 
+            }
+            if (pointShow)
+                return returnPoints
             return false
         },
+        onDateEvent (date) {
+            let needShow = false
+            
+            for (let index = 0; index < this.roomsInfo.length; index++)
+            {
+                if (this.roomsInfo[index].date == date)
+                {
+                    if (!needShow)
+                        this.roomsInfoShow = []
+                    needShow = true
+                    this.roomsInfoShow.push(this.roomsInfo[index])
+                }
+            }
+            if (needShow)
+            {
+                this.showInfos = !this.showInfos
+            }
+        }
    }
 }</script>
 
 <style>
+.login-container {
+    -webkit-border-radius: 5px;
+    border-radius: 5px;
+    -moz-border-radius: 5px;
+    background-clip: padding-box;
+    margin: 10px auto;
+    width: 550px;
+    padding: 35px 35px 15px 35px;
+    background: #fff
+    ;
+    border: 1px solid #eaeaea;
+}
+
 .content .banner {
     margin-left:280px;
     width: 100%;
