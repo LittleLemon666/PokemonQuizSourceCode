@@ -4,7 +4,7 @@
         <!-- <v-main>
             <router-view></router-view>
         </v-main> -->
-        <v-form class="login-container">
+        <v-form class="ri-container">
             <v-container style="margin: 10px; padding: 10px;" outlier>
                 <v-row>
                     <v-col cols="2">
@@ -89,11 +89,8 @@
             @click:date="onDateEvent"
         >
         </v-date-picker>
-        </v-col>
-    </v-layout>
-    <v-layout class="login-container" v-show="showInfos" justify-end rowd v-for="(roomInfo, roomIndex) in roomsInfoShow" :key="(roomInfo, roomIndex)">
-        <v-form>
-            <v-container style="margin: 10px; padding: 10px;" outlier>
+        <v-form class="ri-container" v-show="showInfos" justify-end rowd v-for="(roomInfo, roomIndex) in roomsInfoShow" :key="(roomInfo, roomIndex)">
+            <v-container style="margin: 10px; padding: 10px;">
                 <v-row>
                     <v-col cols="2">
                         <v-subheader>Place</v-subheader>
@@ -161,6 +158,7 @@
                 </v-row>
             </v-container>
         </v-form>
+        </v-col>
     </v-layout>
     </v-col>    
 </template> 
@@ -297,13 +295,15 @@ export default {
 }</script>
 
 <style>
-.login-container {
+.ri-container {
     -webkit-border-radius: 5px;
     border-radius: 5px;
     -moz-border-radius: 5px;
     background-clip: padding-box;
     margin: 10px auto;
     width: 550px;
+    height: 700px;
+    overflow-y: auto;
     padding: 35px 35px 15px 35px;
     background: #fff
     ;

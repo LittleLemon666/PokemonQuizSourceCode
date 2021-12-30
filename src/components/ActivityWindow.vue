@@ -2,7 +2,7 @@
 
 <v-app>
     <div class = "note" :style = "note">
-        <v-form class = "demo-ruleForm login-container">
+        <v-form class = "demo-ruleForm aw-container">
             <v-layout justify-end row0>
                 <v-icon @click="back">mdi-close-circle</v-icon>
             </v-layout>
@@ -355,7 +355,7 @@ export default {
 </script>
 
 <style>
-.login-container {
+.aw-container {
     box-shadow: 0 0px 8px 0 rgba(0, 0, 0, 0.06), 0 1px 0px 0 rgba(0, 0, 0, 0.02);
     -webkit-border-radius: 5px;
     border-radius: 5px;
