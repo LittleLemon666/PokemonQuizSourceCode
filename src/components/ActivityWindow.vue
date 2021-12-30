@@ -64,7 +64,7 @@
                                     <v-card flat class="tt-container">
                                         <vue-good-table :columns="columns" :rows="rows">
                                             <template slot="table-row" slot-scope="props">
-                                                <span v-if="props.column.field !== 'room'">
+                                                <span v-if="props.column.field !== 'room' &&  props.row.room === roomInfo.roomType">
                                                 <button type="button" class="btn btn-primary" v-on:click="setTimeStart(props.column.field, props.row.room)">Rent</button>
                                                 </span>
                                                 <span v-else> {{ props.formattedRow[props.column.field] }} </span>

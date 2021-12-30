@@ -111,9 +111,8 @@
                         max-height="100%"
                         max-width="100%"
                         contain
-                        v-show="inTime(timesStart[roomIndex][personIndex], timesEnd[roomIndex][personIndex])"
                         @click="getID(roomIndex, personIndex); Popmenu($event)"
-                    >
+                    > <!-- outTime(timesStart[roomIndex][personIndex], timesEnd[roomIndex][personIndex])> -->
                         <v-card class="embed-card" flat color="light-blue lighten-5" position="bottom right">
                             <v-subheader>Person {{ person }} </v-subheader>
                         </v-card>
@@ -154,8 +153,24 @@
             </v-tabs>
             <v-tabs-items v-model="tab">
                 <v-tab-item>
-                    <v-card flat>
-                        
+                    <v-card flat class="tt-container">
+                        <vue-good-table :columns="columns" :rows="rows">
+                            <template slot="table-row" slot-scope="props">
+                                <span v-if="props.column.field !== 'room' && noOccupy(props.column.field) &&  props.row.room === currentRoomType">
+                                <button type="button" class="btn btn-primary" v-on:click="wantTime=props.column.field">Rent</button>
+                                </span>
+                                <span v-else> {{ props.formattedRow[props.column.field] }} </span>
+                            </template>
+                        </vue-good-table>
+                        <v-layout justify-end row1>
+                            <v-btn
+                                text
+                                color="primary"
+                                @click="$refs.menuVisible.save(date); Rent()"
+                            >
+                                confirm
+                            </v-btn>
+                        </v-layout>
                     </v-card>
                 </v-tab-item>
                 <v-tab-item>
@@ -195,8 +210,8 @@ export default {
             date: (new Date(Date.now() - (new Date()).getTimezoneOffset() * 60000)).toISOString().substr(0, 10),
             dateBegin: (new Date(Date.now() - (new Date()).getTimezoneOffset() * 60000)).toISOString().substr(0, 10),
             dateEnd: (new Date(Date.now() - (new Date()).getTimezoneOffset() * 60000)).toISOString().substr(0, 10),
-            timeStart: '0700',
-            timeEnd: '0900',
+            timeStart: '0800',
+            timeEnd: '1000',
             roomNames: [
                 'RoomA',
                 'RoomB',
@@ -204,47 +219,17 @@ export default {
             ],
             persons: [
                 [
-                    'Lemon',
                     '',
-                    '030'
-                ],
-                [
-                    'Will',
-                    '-3-',
+                    '',
+                    ''
                 ],
                 [
                     '',
-                    '123',
-                ],
-            ],
-            timesStart: [
-                [
-                    '0700',
-                    '0900',
-                    '0700'
+                    '',
                 ],
                 [
-                    '1000',
-                    '1300',
-                ],
-                [
-                    '1500',
-                    '1300',
-                ],
-            ],
-            timesEnd: [
-                [
-                    '1100',
-                    '1100',
-                    '0900'
-                ],
-                [
-                    '1100',
-                    '1500',
-                ],
-                [
-                    '1700',
-                    '1400',
+                    '',
+                    '',
                 ],
             ],
             menuVisible: false,
@@ -253,7 +238,101 @@ export default {
                 'Day', 'Month',
             ],
             x: 0,
-            y: 0
+            y: 0,
+            columns: [
+                {
+                    label: "",
+                    field: "room",
+                },
+                {
+                    label: "8a.m.",
+                    field: "0800",
+                },
+                {
+                    label: "9a.m.",
+                    field: "0900",
+                },
+                {
+                    label: "10a.m.",
+                    field: "1000",
+                },
+                {
+                    label: "11a.m.",
+                    field: "1100",
+                },
+                {
+                    label: "12p.m.",
+                    field: "1200",
+                },
+                {
+                    label: "1p.m.",
+                    field: "1300",
+                },
+                {
+                    label: "2p.m.",
+                    field: "1400",
+                },
+                {
+                    label: "3p.m.",
+                    field: "1500",
+                },
+                {
+                    label: "4p.m.",
+                    field: "1600",
+                },
+                {
+                    label: "5p.m.",
+                    field: "1700",
+                },
+                {
+                    label: "6p.m.",
+                    field: "1800",
+                },
+                {
+                    label: "7p.m.",
+                    field: "1900",
+                },
+                {
+                    label: "8p.m.",
+                    field: "2000",
+                },
+            ],
+            rows: [
+                {
+                    room: "RoomA1",
+                },
+                {
+                    room: "RoomA2",
+                },
+                {
+                    room: "RoomA3",
+                },
+                {
+                    room: "RoomB1",
+                },
+                {
+                    room: "RoomB2",
+                },
+                {
+                    room: "RoomC1",
+                },
+                {
+                    room: "RoomC2",
+                },
+            ],
+            currentRoomType: '',
+            wantTime: '',
+            roomOccupys: [
+                {
+                    date: (new Date(Date.now() - (new Date()).getTimezoneOffset() * 60000)).toISOString().substr(0, 10),
+                    roomType: 'RoomA',
+                    roomIndex: 2,
+                    user: 'LilB',
+                    theme: 'Discussion',
+                    timeStart: "0900",
+                    timeEnd: "1100"
+                }
+            ]
         };
     },
     beforeMount() {
@@ -263,6 +342,7 @@ export default {
         getID (roomIndex, personIndex) {
             this.roomTypeIndex = roomIndex;
             this.roomIndex = personIndex;
+            this.currentRoomType = this.roomNames[roomIndex] + (personIndex+1).toString();
         },
         Popmenu (event) {
             if (!this.menuVisible) {
@@ -274,15 +354,15 @@ export default {
             }
         },
         Rent () {
-            //console.log(this.$userName)
+            console.log(this.$userName)
             let data = {
                 roomInfo: {
                     roomType: this.roomNames[this.roomTypeIndex] + (this.roomIndex+1).toString(),
                     theme: '',
                     chairPerson: this.$email,
                     date: this.date,
-                    timeStart: this.timeStart,
-                    timeEnd: this.timeEnd,
+                    timeStart: this.wantTime,
+                    timeEnd: (parseInt(this.wantTime) + 100).toString(),
                     emails: [],
                     agenda: '',
                     notes: ''
@@ -294,17 +374,58 @@ export default {
         },
         changeTime() {
             this.$emit('FetchRoomByDateInterval', this, this.dateBegin, this.dateEnd)
+            this.fetchRoomByDateIntervalResponse(this)
         },
         fetchRoomByDateIntervalResponse(data) {
-            for (let index = 0; index < data.length; index++)
+            // this.roomOccupys = []
+            // for (let index = 0; index < data.length; index++)
+            // {
+            //     let roomOccupy = {
+            //         date: data[index].Date,
+            //         user: data[index].User,
+            //         room: data[index].Room,
+            //         roomType: data[index].Room.replace('1','').replace('2','').replace('3',''),
+            //         roomIndex: parseInt(data[index].Room.replace('Room','').replace('A','').replace('B','').replace('C','')),
+            //         theme: data[index].Theme,
+            //         timeStart: data[index].TimeStart,
+            //         timeEnd: data[index].TimeEnd,
+            //     }
+            //     roomOccupys.push(roomOccupy)
+            // }
+            this.persons = [
+                [
+                    '',
+                    '',
+                    ''
+                ],
+                [
+                    '',
+                    '',
+                ],
+                [
+                    '',
+                    '',
+                ],
+            ]
+            for (let index = 0; index < this.roomOccupys.length; index++)
             {
-                persons[roomNames.indexOf(data[index].Room)][data[index].RoomIndex] = data[index].User;
-                timesStart[roomNames.indexOf(data[index].Room)][data[index].RoomIndex] = data[index].TimeStart;
-                timesEnd[roomNames.indexOf(data[index].Room)][data[index].RoomIndex] = data[index].TimeEnd;
+                if (this.fillTime(this.roomOccupys[index].timeStart, this.roomOccupys[index].timeEnd))
+                {
+                    this.persons[this.roomNames.indexOf(this.roomOccupys[index].roomType)][this.roomOccupys[index].roomIndex - 1] = this.roomOccupys[index].user
+                }
             }
         },
-        inTime(s, e) {
-            return (parseInt(s) >= parseInt(this.timeStart) && parseInt(e) <= parseInt(this.timeEnd))
+        fillTime(s, e) {
+            return ((parseInt(e) >= parseInt(this.timeStart) && parseInt(e) < parseInt(this.timeEnd)) ||
+                    (parseInt(s) >= parseInt(this.timeStart) && parseInt(s) < parseInt(this.timeEnd)))
+        },
+        noOccupy(d) {
+            for (let index = 0; index < this.roomOccupys.length; index++)
+            {
+                if (this.roomOccupys[index].roomType + (this.roomOccupys[index].roomIndex).toString() === this.currentRoomType && d >= this.roomOccupys[index].timeStart && d <= this.roomOccupys[index].timeEnd)
+                    return false
+            }
+            return true
         }
     }
 }</script>
