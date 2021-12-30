@@ -61,8 +61,24 @@
                             </v-tabs>
                             <v-tabs-items v-model="tab">
                                 <v-tab-item>
-                                    <v-card flat>
-                                        
+                                    <v-card flat class="tt-container">
+                                        <vue-good-table :columns="columns" :rows="rows">
+                                            <template slot="table-row" slot-scope="props">
+                                                <span v-if="props.column.field !== 'room'">
+                                                <button type="button" class="btn btn-primary" v-on:click="setTimeStart(props.column.field, props.row.room)">Rent</button>
+                                                </span>
+                                                <span v-else> {{ props.formattedRow[props.column.field] }} </span>
+                                            </template>
+                                        </vue-good-table>
+                                        <v-layout justify-end row1>
+                                            <v-btn
+                                                text
+                                                color="primary"
+                                                @click="menu_visible1 = false"
+                                            >
+                                                confirm
+                                            </v-btn>
+                                        </v-layout>
                                     </v-card>
                                 </v-tab-item>
                                 <v-tab-item>
@@ -87,6 +103,10 @@
                                 </v-tab-item>
                             </v-tabs-items>
                         </v-menu>
+                        <v-text-field
+                            v-model="roomInfo.timeStart"
+                            readonly
+                        ></v-text-field>
                     </v-col>
                     <v-col cols="1">
                         <v-subheader>~</v-subheader>
@@ -128,8 +148,24 @@
                             </v-tabs>
                             <v-tabs-items v-model="tab">
                                 <v-tab-item>
-                                    <v-card flat>
-                                        
+                                    <v-card flat class="tt-container">
+                                        <vue-good-table :columns="columns" :rows="rows">
+                                            <template slot="table-row" slot-scope="props">
+                                                <span v-if="props.column.field !== 'room' && props.column.field >= roomInfo.timeStart &&  props.row.room === roomInfo.roomType">
+                                                <button type="button" class="btn btn-primary" v-on:click="setTimeEnd(props.column.field, props.row.room)">Rent</button>
+                                                </span>
+                                                <span v-else> {{ props.formattedRow[props.column.field] }} </span>
+                                            </template>
+                                        </vue-good-table>
+                                        <v-layout justify-end row1>
+                                            <v-btn
+                                                text
+                                                color="primary"
+                                                @click="menu_visible2 = false"
+                                            >
+                                                confirm
+                                            </v-btn>
+                                        </v-layout>
                                     </v-card>
                                 </v-tab-item>
                                 <v-tab-item>
@@ -154,6 +190,10 @@
                                 </v-tab-item>
                             </v-tabs-items>
                         </v-menu>
+                        <v-text-field
+                            v-model="roomInfo.timeEnd"
+                            readonly
+                        ></v-text-field>
                     </v-col>
                 </v-row>
                 <v-spacer></v-spacer>
@@ -279,6 +319,87 @@ export default {
             selected: this.value,
             error_msg: '',
             fromSite: this.$router.params.fromSite,
+            columns: [
+                {
+                    label: "",
+                    field: "room",
+                },
+                {
+                    label: "8a.m.",
+                    field: "0800",
+                },
+                {
+                    label: "9a.m.",
+                    field: "0900",
+                },
+                {
+                    label: "10a.m.",
+                    field: "1000",
+                },
+                {
+                    label: "11a.m.",
+                    field: "1100",
+                },
+                {
+                    label: "12p.m.",
+                    field: "1200",
+                },
+                {
+                    label: "1p.m.",
+                    field: "1300",
+                },
+                {
+                    label: "2p.m.",
+                    field: "1400",
+                },
+                {
+                    label: "3p.m.",
+                    field: "1500",
+                },
+                {
+                    label: "4p.m.",
+                    field: "1600",
+                },
+                {
+                    label: "5p.m.",
+                    field: "1700",
+                },
+                {
+                    label: "6p.m.",
+                    field: "1800",
+                },
+                {
+                    label: "7p.m.",
+                    field: "1900",
+                },
+                {
+                    label: "8p.m.",
+                    field: "2000",
+                },
+            ],
+            rows: [
+                {
+                    room: "RoomA1",
+                },
+                {
+                    room: "RoomA2",
+                },
+                {
+                    room: "RoomA3",
+                },
+                {
+                    room: "RoomB1",
+                },
+                {
+                    room: "RoomB2",
+                },
+                {
+                    room: "RoomC1",
+                },
+                {
+                    room: "RoomC2",
+                },
+            ]
         }
     },
     methods: {
@@ -349,6 +470,14 @@ export default {
             else {
                 this.$router.replace('/home')
             }
+        },
+        setTimeStart(time, room) {
+            this.roomInfo.timeStart = time
+            this.roomInfo.roomType = room
+        },
+        setTimeEnd(time, room) {
+            this.roomInfo.timeEnd = time
+            this.roomInfo.roomType = room
         }
     }
 }
@@ -368,6 +497,21 @@ export default {
     ;
     border: 1px solid #eaeaea;
     box-shadow: 0 0 25px #cac6c6;
+}
+
+.tt-container {
+    -webkit-border-radius: 5px;
+    border-radius: 5px;
+    -moz-border-radius: 5px;
+    background-clip: padding-box;
+    margin: 10px auto;
+    width: 550px;
+    height: 550px;
+    overflow-y: auto;
+    padding: 35px 35px 15px 35px;
+    background: #fff
+    ;
+    border: 1px solid #eaeaea;
 }
 
 .v-tab {

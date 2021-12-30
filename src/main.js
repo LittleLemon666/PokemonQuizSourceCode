@@ -7,6 +7,9 @@ import ElementUI from 'element-ui'
 import 'element-ui/lib/theme-chalk/index.css'
 import vuetify from '@/plugins/vuetify' // path to vuetify export
 import 'material-design-icons-iconfont/dist/material-design-icons.css'
+import VueGoodTablePlugin from 'vue-good-table';
+// import the styles
+import 'vue-good-table/dist/vue-good-table.css'
 
 Vue.use(ElementUI)
 Vue.config.productionTip = false
@@ -14,6 +17,7 @@ Vue.prototype.$userName = 'admin'
 Vue.prototype.$firstName = 'NTUST'
 Vue.prototype.$lastName = 'CSIE'
 Vue.prototype.$email = 'b10815000@gapps.ntust.edu.tw'
+Vue.use(VueGoodTablePlugin);
 
 /* eslint-disable no-new */
 new Vue({
