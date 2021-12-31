@@ -1,6 +1,6 @@
 <template>
     <v-app>
-        <v-layout justify-end row0>
+        <v-layout justify-center row0>
             <v-col cols="1">
                 <v-subheader>Date</v-subheader>
             </v-col>
@@ -87,13 +87,82 @@
                 <v-subheader>Time</v-subheader>
             </v-col>
             <v-col cols="1">
-                <v-text-field v-model="timeStart"></v-text-field>
+                <v-menu
+                    ref="menuVisible3"
+                    v-model="menuVisible3"
+                    :close-on-content-click="false"
+                    :return-value.sync="timeStart"
+                    transition="scale-transition"
+                    offset-y
+                    min-width="auto"
+                >
+                    <template v-slot:activator="{ on, attrs }">
+                        <v-text-field
+                            v-model="timeStart"
+                            readonly
+                            v-bind="attrs"
+                            v-on="on"
+                        ></v-text-field>
+                    </template>
+                    <v-card flat class="tt-container">
+                        <vue-good-table :columns="columns_t" :rows="rows_t">
+                            <template slot="table-row" slot-scope="props">
+                                <button type="button" class="btn btn-primary" v-on:click="timeStart=props.column.field">Select</button>
+                            </template>
+                        </vue-good-table>
+                        <v-layout justify-end row1>
+                            <v-btn
+                                text
+                                color="primary"
+                                @click="$refs.menuVisible3.save(timeStart); localChangeTime()"
+                            >
+                                confirm
+                            </v-btn>
+                        </v-layout>
+                    </v-card>
+                </v-menu>
             </v-col>
             <v-col cols="1">
                 <v-subheader>~</v-subheader>
             </v-col>
             <v-col cols="1">
-                <v-text-field v-model="timeEnd"></v-text-field>
+                <v-menu
+                    ref="menuVisible4"
+                    v-model="menuVisible4"
+                    :close-on-content-click="false"
+                    :return-value.sync="timeEnd"
+                    transition="scale-transition"
+                    offset-y
+                    min-width="auto"
+                >
+                    <template v-slot:activator="{ on, attrs }">
+                        <v-text-field
+                            v-model="timeEnd"
+                            readonly
+                            v-bind="attrs"
+                            v-on="on"
+                        ></v-text-field>
+                    </template>
+                    <v-card flat class="tt-container">
+                        <vue-good-table :columns="columns_t" :rows="rows_t">
+                            <template slot="table-row" slot-scope="props">
+                                <span v-if="props.column.field > timeStart">
+                                <button type="button" class="btn btn-primary" v-on:click="timeEnd=props.column.field">Select</button>
+                                </span>
+                                <span v-else> {{ props.formattedRow[props.column.field] }} </span>
+                            </template>
+                        </vue-good-table>
+                        <v-layout justify-end row1>
+                            <v-btn
+                                text
+                                color="primary"
+                                @click="$refs.menuVisible4.save(timeEnd); localChangeTime()"
+                            >
+                                confirm
+                            </v-btn>
+                        </v-layout>
+                    </v-card>
+                </v-menu>
             </v-col>
         </v-layout>
         <v-container justify-center v-for="(room, roomIndex) in roomNames" :key="(room, roomIndex)">
@@ -157,13 +226,19 @@
                         <vue-good-table :columns="columns" :rows="rows">
                             <template slot="table-row" slot-scope="props">
                                 <span v-if="props.column.field !== 'room' && noOccupy(props.column.field) &&  props.row.room === currentRoomType">
-                                <button type="button" class="btn btn-primary" v-on:click="wantTime=props.column.field">Rent</button>
+                                    <span v-if="props.column.field == wantTime">
+                                        Select
+                                    </span>
+                                    <span v-else>
+                                        <button type="button" class="btn btn-primary" v-on:click="wantTime=props.column.field">Rent</button>
+                                    </span>
                                 </span>
                                 <span v-else> {{ props.formattedRow[props.column.field] }} </span>
                             </template>
                         </vue-good-table>
                         <v-layout justify-end row1>
                             <v-btn
+                                v-if="wantTime"
                                 text
                                 color="primary"
                                 @click="$refs.menuVisible.save(date); Rent()"
@@ -205,6 +280,9 @@ export default {
         return {
             menuVisible1: false,
             menuVisible2: false,
+            menuVisible3: false,
+            menuVisible4: false,
+            menuVisible: false,
             roomTypeIndex: 0,
             roomIndex: 0,
             date: (new Date(Date.now() - (new Date()).getTimezoneOffset() * 60000)).toISOString().substr(0, 10),
@@ -232,7 +310,6 @@ export default {
                     '',
                 ],
             ],
-            menuVisible: false,
             tab: null,
             items: [
                 'Day', 'Month',
@@ -320,6 +397,65 @@ export default {
                     room: "RoomC2",
                 },
             ],
+            columns_t: [
+                {
+                    label: "8a.m.",
+                    field: "0800",
+                },
+                {
+                    label: "9a.m.",
+                    field: "0900",
+                },
+                {
+                    label: "10a.m.",
+                    field: "1000",
+                },
+                {
+                    label: "11a.m.",
+                    field: "1100",
+                },
+                {
+                    label: "12p.m.",
+                    field: "1200",
+                },
+                {
+                    label: "1p.m.",
+                    field: "1300",
+                },
+                {
+                    label: "2p.m.",
+                    field: "1400",
+                },
+                {
+                    label: "3p.m.",
+                    field: "1500",
+                },
+                {
+                    label: "4p.m.",
+                    field: "1600",
+                },
+                {
+                    label: "5p.m.",
+                    field: "1700",
+                },
+                {
+                    label: "6p.m.",
+                    field: "1800",
+                },
+                {
+                    label: "7p.m.",
+                    field: "1900",
+                },
+                {
+                    label: "8p.m.",
+                    field: "2000",
+                },
+            ],
+            rows_t: [
+                {
+                    
+                },
+            ],
             currentRoomType: '',
             wantTime: '',
             roomOccupys: [
@@ -331,6 +467,15 @@ export default {
                     theme: 'Discussion',
                     timeStart: "0900",
                     timeEnd: "1100"
+                },
+                {
+                    date: (new Date(Date.now() - (new Date()).getTimezoneOffset() * 60000)).toISOString().substr(0, 10),
+                    roomType: 'RoomA',
+                    roomIndex: 2,
+                    user: 'LilB',
+                    theme: 'Discussion',
+                    timeStart: "1300",
+                    timeEnd: "1700"
                 }
             ]
         };
@@ -355,6 +500,10 @@ export default {
         },
         Rent () {
             console.log(this.$userName)
+            this.timeEnd = (parseInt(this.wantTime) + 100).toString()
+            if (this.timeEnd.length == 3)
+                this.timeEnd = '0' + this.timeEnd
+
             let data = {
                 roomInfo: {
                     roomType: this.roomNames[this.roomTypeIndex] + (this.roomIndex+1).toString(),
@@ -362,7 +511,7 @@ export default {
                     chairPerson: this.$email,
                     date: this.date,
                     timeStart: this.wantTime,
-                    timeEnd: (parseInt(this.wantTime) + 100).toString(),
+                    timeEnd: this.timeEnd,
                     emails: [],
                     agenda: '',
                     notes: ''
@@ -374,24 +523,16 @@ export default {
         },
         changeTime() {
             this.$emit('FetchRoomByDateInterval', this, this.dateBegin, this.dateEnd)
-            this.fetchRoomByDateIntervalResponse(this)
+            // this.fetchRoomByDateIntervalResponse(this)
         },
-        fetchRoomByDateIntervalResponse(data) {
-            // this.roomOccupys = []
-            // for (let index = 0; index < data.length; index++)
-            // {
-            //     let roomOccupy = {
-            //         date: data[index].Date,
-            //         user: data[index].User,
-            //         room: data[index].Room,
-            //         roomType: data[index].Room.replace('1','').replace('2','').replace('3',''),
-            //         roomIndex: parseInt(data[index].Room.replace('Room','').replace('A','').replace('B','').replace('C','')),
-            //         theme: data[index].Theme,
-            //         timeStart: data[index].TimeStart,
-            //         timeEnd: data[index].TimeEnd,
-            //     }
-            //     roomOccupys.push(roomOccupy)
-            // }
+        localChangeTime() {
+            if (this.timeEnd <= this.timeStart)
+            {
+                this.timeEnd = (parseInt(this.timeStart) + 100).toString()
+                if (this.timeEnd.length == 3)
+                    this.timeEnd = '0' + this.timeEnd
+            }
+
             this.persons = [
                 [
                     '',
@@ -415,6 +556,24 @@ export default {
                 }
             }
         },
+        fetchRoomByDateIntervalResponse(data) {
+            // this.roomOccupys = []
+            // for (let index = 0; index < data.length; index++)
+            // {
+            //     let roomOccupy = {
+            //         date: data[index].Date,
+            //         user: data[index].User,
+            //         room: data[index].Room,
+            //         roomType: data[index].Room.replace('1','').replace('2','').replace('3',''),
+            //         roomIndex: parseInt(data[index].Room.replace('Room','').replace('A','').replace('B','').replace('C','')),
+            //         theme: data[index].Theme,
+            //         timeStart: data[index].TimeStart,
+            //         timeEnd: data[index].TimeEnd,
+            //     }
+            //     roomOccupys.push(roomOccupy)
+            // }
+            this.localChangeTime()
+        },
         fillTime(s, e) {
             return ((parseInt(e) >= parseInt(this.timeStart) && parseInt(e) < parseInt(this.timeEnd)) ||
                     (parseInt(s) >= parseInt(this.timeStart) && parseInt(s) < parseInt(this.timeEnd)))
@@ -426,7 +585,7 @@ export default {
                     return false
             }
             return true
-        }
+        },
     }
 }</script>
 
