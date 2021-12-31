@@ -65,7 +65,7 @@ export default {
                     date: (new Date(Date.now() - (new Date()).getTimezoneOffset() * 60000)).toISOString().substr(0, 10),
                     timeStart: '0700',
                     timeEnd: '0900',
-                    invited: 'b10815000@gapps.ntust.edu.tw',
+                    invited: 'b10815000@gapps.ntust.edu.tw;a@gmail.com',
                     agenda: 'I am a master of coding',
                     note: 'test'
                 },
