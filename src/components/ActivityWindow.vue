@@ -64,21 +64,12 @@
                                     <v-card flat class="tt-container">
                                         <vue-good-table :columns="columns" :rows="rows">
                                             <template slot="table-row" slot-scope="props">
-                                                <span v-if="props.column.field !== 'room' &&  props.row.room === roomInfo.roomType">
-                                                <button type="button" class="btn btn-primary" v-on:click="setTimeStart(props.column.field, props.row.room)">Rent</button>
+                                                <span v-if="props.column.field !== 'room' && props.column.field >= roomInfo.timeStart && props.column.field < roomInfo.timeEnd && props.row.room === roomInfo.roomType">
+                                                    Select
                                                 </span>
                                                 <span v-else> {{ props.formattedRow[props.column.field] }} </span>
                                             </template>
                                         </vue-good-table>
-                                        <v-layout justify-end row1>
-                                            <v-btn
-                                                text
-                                                color="primary"
-                                                @click="menu_visible1 = false"
-                                            >
-                                                confirm
-                                            </v-btn>
-                                        </v-layout>
                                     </v-card>
                                 </v-tab-item>
                                 <v-tab-item>
@@ -89,15 +80,6 @@
                                             scrollable
                                             value="yyyy/MM/dd"
                                         >
-                                            <v-layout justify-end row1>
-                                                <v-btn
-                                                    text
-                                                    color="primary"
-                                                    @click="$refs.menu_visible1.save(roomInfo.date)"
-                                                >
-                                                    confirm
-                                                </v-btn>
-                                            </v-layout>
                                         </v-date-picker>
                                     </v-card>
                                 </v-tab-item>
@@ -151,20 +133,13 @@
                                     <v-card flat class="tt-container">
                                         <vue-good-table :columns="columns" :rows="rows">
                                             <template slot="table-row" slot-scope="props">
-                                                <span v-if="props.column.field !== 'room' && props.column.field >= roomInfo.timeStart &&  props.row.room === roomInfo.roomType">
-                                                <button type="button" class="btn btn-primary" v-on:click="setTimeEnd(props.column.field, props.row.room)">Rent</button>
+                                                <span v-if="props.column.field !== 'room' && props.column.field >= roomInfo.timeStart && props.column.field < roomInfo.timeEnd && props.row.room === roomInfo.roomType">
+                                                    Select
                                                 </span>
                                                 <span v-else> {{ props.formattedRow[props.column.field] }} </span>
                                             </template>
                                         </vue-good-table>
                                         <v-layout justify-end row1>
-                                            <v-btn
-                                                text
-                                                color="primary"
-                                                @click="menu_visible2 = false"
-                                            >
-                                                confirm
-                                            </v-btn>
                                         </v-layout>
                                     </v-card>
                                 </v-tab-item>
@@ -176,15 +151,6 @@
                                             scrollable
                                             value="yyyy/MM/dd"
                                         >
-                                            <v-layout justify-end row2>
-                                                <v-btn
-                                                    text
-                                                    color="primary"
-                                                    @click="$refs.menu_visible2.save(roomInfo.date)"
-                                                >
-                                                    confirm
-                                                </v-btn>
-                                            </v-layout>
                                         </v-date-picker>
                                     </v-card>
                                 </v-tab-item>
