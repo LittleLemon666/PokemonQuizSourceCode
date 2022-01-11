@@ -451,29 +451,33 @@ export default {
             currentRoomType: '',
             wantTime: '',
             roomOccupys: [
-                {
-                    date: (new Date(Date.now() - (new Date()).getTimezoneOffset() * 60000)).toISOString().substr(0, 10),
-                    roomType: 'RoomA',
-                    roomIndex: 2,
-                    user: 'LilB',
-                    theme: 'Discussion',
-                    timeStart: "0900",
-                    timeEnd: "1100"
-                },
-                {
-                    date: (new Date(Date.now() - (new Date()).getTimezoneOffset() * 60000)).toISOString().substr(0, 10),
-                    roomType: 'RoomA',
-                    roomIndex: 2,
-                    user: 'LilB',
-                    theme: 'Discussion',
-                    timeStart: "1300",
-                    timeEnd: "1700"
-                }
+                // {
+                //     date: (new Date(Date.now() - (new Date()).getTimezoneOffset() * 60000)).toISOString().substr(0, 10),
+                //     roomType: 'RoomA',
+                //     roomIndex: 2,
+                //     user: 'LilB',
+                //     theme: 'Discussion',
+                //     timeStart: "0900",
+                //     timeEnd: "1100"
+                // },
+                // {
+                //     date: (new Date(Date.now() - (new Date()).getTimezoneOffset() * 60000)).toISOString().substr(0, 10),
+                //     roomType: 'RoomA',
+                //     roomIndex: 2,
+                //     user: 'LilB',
+                //     theme: 'Discussion',
+                //     timeStart: "1300",
+                //     timeEnd: "1700"
+                // }
             ]
         };
     },
     beforeMount() {
         this.changeTime()
+    },
+    mounted() {
+        if (this.$activityWindowReturn === 'booking')
+            this.$emit('bookingR')
     },
     methods: {
         getID (roomIndex, personIndex) {

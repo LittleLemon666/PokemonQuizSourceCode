@@ -48,8 +48,8 @@ export default {
                 backgroundRepeat: "no-repeat",
             },
             account : {
-                username:'admin',
-                password:'123456',
+                username:'',
+                password:'',
             },
             rules: {
                 username :[

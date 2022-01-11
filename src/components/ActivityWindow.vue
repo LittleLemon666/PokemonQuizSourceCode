@@ -409,12 +409,14 @@ export default {
                 this.$emit('CancelRoom', this, this.roomInfo)
             }
             else {
+                this.$activityWindowReturn = this.fromSite
                 this.$router.replace('/booking')
             }
         },
         cancelResponse(state) {
             if (state === '0') {
                 console.log('ok');
+                this.$activityWindowReturn = this.fromSite
                 this.$router.replace('/booking')
             }
             else if (state === '1') {
@@ -427,6 +429,7 @@ export default {
             }
         },
         back() {
+            this.$activityWindowReturn = this.fromSite
             if (this.fromSite === 'activity') {
                 this.$router.replace('/activity')
             }

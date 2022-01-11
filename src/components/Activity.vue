@@ -124,6 +124,10 @@ export default {
     beforeMount() {
         this.fetchRoomByActivity()
     },
+    mounted() {
+        if (this.$activityWindowReturn === 'activity')
+            this.$emit('activityR')
+    },
     methods: {
         fetchRoomByActivity() {
             this.$emit('fetchRoomByActivity', this)

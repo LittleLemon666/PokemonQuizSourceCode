@@ -13,10 +13,39 @@ import 'vue-good-table/dist/vue-good-table.css'
 
 Vue.use(ElementUI)
 Vue.config.productionTip = false
-Vue.prototype.$userName = 'admin'
-Vue.prototype.$firstName = 'NTUST'
-Vue.prototype.$lastName = 'CSIE'
-Vue.prototype.$email = 'b10815000@gapps.ntust.edu.tw'
+let globalData = new Vue({
+  data: {
+    $activityWindowReturn: 'Home',
+    $userName: '', //admin
+    $firstName: '', //NTUST
+    $lastName: '', //CSIE
+    $email: '', //b10815000@gapps.ntust.edu.tw
+  }
+})
+Vue.mixin({
+  computed: {
+    $activityWindowReturn: {
+      get: function() { return globalData.$data.$activityWindowReturn },
+      set: function(newValue) { globalData.$data.$activityWindowReturn = newValue }
+    },
+    $userName: {
+      get: function() { return globalData.$data.$userName },
+      set: function(newValue) { globalData.$data.$userName = newValue }
+    },
+    $firstName: {
+      get: function() { return globalData.$data.$firstName },
+      set: function(newValue) { globalData.$data.$firstName = newValue }
+    },
+    $lastName: {
+      get: function() { return globalData.$data.$lastName },
+      set: function(newValue) { globalData.$data.$lastName = newValue }
+    },
+    $email: {
+      get: function() { return globalData.$data.$email },
+      set: function(newValue) { globalData.$data.$email = newValue }
+    }
+  }
+})
 Vue.use(VueGoodTablePlugin);
 
 /* eslint-disable no-new */

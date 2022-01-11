@@ -103,7 +103,7 @@
         </v-app-bar>
 
         <v-main>
-            <router-view @FetchRoomByDateInterval="FetchRoomByDateInterval" @fetchRoomByActivity="fetchRoomByActivity"></router-view>
+            <router-view @FetchRoomByDateInterval="FetchRoomByDateInterval" @fetchRoomByActivity="fetchRoomByActivity" @activityR="activityR" @bookingR="bookingR"></router-view>
         </v-main>
     </v-app>
 </template> 
@@ -127,6 +127,12 @@ export default {
         };
     },
     methods: {
+        activityR() {
+            this.web_at = 'Activity'
+        },
+        bookingR() {
+            this.web_at = 'Booking'
+        },
         HomeLogo() {
             this.$router.replace('home').catch(()=>{})
             this.Home()
