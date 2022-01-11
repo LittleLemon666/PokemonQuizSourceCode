@@ -87,7 +87,14 @@
                 <v-subheader>Time</v-subheader>
             </v-col>
             <v-col cols="1">
-                <v-menu
+                <v-combobox
+                    v-model="timeStart"
+                    :items="times"
+                    label="time start"
+                    @change="localChangeTime"
+                    outlined
+                ></v-combobox>
+                <!-- <v-menu
                     ref="menuVisible3"
                     v-model="menuVisible3"
                     :close-on-content-click="false"
@@ -120,49 +127,19 @@
                             </v-btn>
                         </v-layout>
                     </v-card>
-                </v-menu>
+                </v-menu> -->
             </v-col>
             <v-col cols="1">
                 <v-subheader>~</v-subheader>
             </v-col>
             <v-col cols="1">
-                <v-menu
-                    ref="menuVisible4"
-                    v-model="menuVisible4"
-                    :close-on-content-click="false"
-                    :return-value.sync="timeEnd"
-                    transition="scale-transition"
-                    offset-y
-                    min-width="auto"
-                >
-                    <template v-slot:activator="{ on, attrs }">
-                        <v-text-field
-                            v-model="timeEnd"
-                            readonly
-                            v-bind="attrs"
-                            v-on="on"
-                        ></v-text-field>
-                    </template>
-                    <v-card flat class="tt-container">
-                        <vue-good-table :columns="columns_t" :rows="rows_t">
-                            <template slot="table-row" slot-scope="props">
-                                <span v-if="props.column.field > timeStart">
-                                <button type="button" class="btn btn-primary" v-on:click="timeEnd=props.column.field">Select</button>
-                                </span>
-                                <span v-else> {{ props.formattedRow[props.column.field] }} </span>
-                            </template>
-                        </vue-good-table>
-                        <v-layout justify-end row1>
-                            <v-btn
-                                text
-                                color="primary"
-                                @click="$refs.menuVisible4.save(timeEnd); localChangeTime()"
-                            >
-                                confirm
-                            </v-btn>
-                        </v-layout>
-                    </v-card>
-                </v-menu>
+                <v-combobox
+                    v-model="timeEnd"
+                    :items="times"
+                    label="time end"
+                    @change="localChangeTime"
+                    outlined
+                ></v-combobox>
             </v-col>
         </v-layout>
         <v-container justify-center v-for="(room, roomIndex) in roomNames" :key="(room, roomIndex)">
@@ -280,6 +257,21 @@ export default {
         return {
             menuVisible1: false,
             menuVisible2: false,
+            times: [
+                '0800',
+                '0900',
+                '1000',
+                '1100',
+                '1200',
+                '1300',
+                '1400',
+                '1500',
+                '1600',
+                '1700',
+                '1800',
+                '1900',
+                '2000',
+            ],
             menuVisible3: false,
             menuVisible4: false,
             menuVisible: false,
