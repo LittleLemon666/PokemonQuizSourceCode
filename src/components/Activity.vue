@@ -57,30 +57,30 @@ export default {
     data () {
         return {
             roomsInfo: [
-                {
-                    RUID: '??',
-                    room: 'RoomC2',
-                    theme: 'Hello',
-                    chairPerson: 'ntust@gamil.com',
-                    date: (new Date(Date.now() - (new Date()).getTimezoneOffset() * 60000)).toISOString().substr(0, 10),
-                    timeStart: '0700',
-                    timeEnd: '0900',
-                    invited: 'b10815000@gapps.ntust.edu.tw;a@gmail.com',
-                    agenda: 'I am a master of coding',
-                    note: 'test'
-                },
-                {
-                    RUID: '???',
-                    room: 'RoomA1',
-                    theme: 'World',
-                    chairPerson: 'b10815000@gapps.ntust.edu.tw',
-                    date: (new Date(Date.now() - (new Date()).getTimezoneOffset() * 60000)).toISOString().substr(0, 10),
-                    timeStart: '0900',
-                    timeEnd: '1700',
-                    invited: 'test@gmail.com',
-                    agenda: 'XP',
-                    note: '030'
-                },
+                // {
+                //     RUID: '??',
+                //     room: 'RoomC2',
+                //     theme: 'Hello',
+                //     chairPerson: 'ntust@gamil.com',
+                //     date: (new Date(Date.now() - (new Date()).getTimezoneOffset() * 60000)).toISOString().substr(0, 10),
+                //     timeStart: '0700',
+                //     timeEnd: '0900',
+                //     invited: 'b10815000@gapps.ntust.edu.tw;a@gmail.com',
+                //     agenda: 'I am a master of coding',
+                //     note: 'test'
+                // },
+                // {
+                //     RUID: '???',
+                //     room: 'RoomA1',
+                //     theme: 'World',
+                //     chairPerson: 'b10815000@gapps.ntust.edu.tw',
+                //     date: (new Date(Date.now() - (new Date()).getTimezoneOffset() * 60000)).toISOString().substr(0, 10),
+                //     timeStart: '0900',
+                //     timeEnd: '1700',
+                //     invited: 'test@gmail.com',
+                //     agenda: 'XP',
+                //     note: '030'
+                // },
             ],
             sort_f: 'date',
             sort_items: [{
