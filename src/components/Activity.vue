@@ -161,7 +161,8 @@ export default {
         check(roomIndex) {
             let data = {
                 roomInfo: this.roomsInfo[roomIndex],
-                fromSite: 'activity'
+                fromSite: 'activity',
+                roomOccupys: []
             };
             this.$router.params = data
             this.$router.replace('/activityWindow')

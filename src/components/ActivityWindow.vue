@@ -64,10 +64,18 @@
                                     <v-card flat class="tt-container">
                                         <vue-good-table :columns="columns" :rows="rows">
                                             <template slot="table-row" slot-scope="props">
-                                                <span v-if="props.column.field !== 'room' && props.column.field >= roomInfo.timeStart && props.column.field < roomInfo.timeEnd && props.row.room === roomInfo.roomType">
-                                                    Select
+                                                <span v-if="props.column.field !== 'room' && props.row.room === roomInfo.roomType">
+                                                    <span v-if="noOccupy(props.column.field)">
+                                                        <span v-if="props.column.field >= roomInfo.timeStart && props.column.field < roomInfo.timeEnd">
+                                                            <button type="button" class="btn btn-primary" v-on:click="checkTime(props.column.field, roomInfo.timeEnd)">Select</button>
+                                                        </span>
+                                                        <span v-else>
+                                                            <button type="button" class="btn btn-primary" v-on:click="checkTime(props.column.field, roomInfo.timeEnd)">Rent</button>
+                                                        </span>
+                                                    </span>
+                                                    <span v-else> X </span>
                                                 </span>
-                                                <span v-else> {{ props.formattedRow[props.column.field] }} </span>
+                                                <span v-else> X </span>
                                             </template>
                                         </vue-good-table>
                                     </v-card>
@@ -133,10 +141,18 @@
                                     <v-card flat class="tt-container">
                                         <vue-good-table :columns="columns" :rows="rows">
                                             <template slot="table-row" slot-scope="props">
-                                                <span v-if="props.column.field !== 'room' && props.column.field >= roomInfo.timeStart && props.column.field < roomInfo.timeEnd && props.row.room === roomInfo.roomType">
-                                                    Select
+                                                <span v-if="props.column.field !== 'room' && props.row.room === roomInfo.roomType">
+                                                    <span v-if="noOccupy(props.column.field)">
+                                                        <span v-if="props.column.field >= roomInfo.timeStart && props.column.field < roomInfo.timeEnd">
+                                                            <button type="button" class="btn btn-primary" v-on:click="checkTime(roomInfo.timeStart, parseInt(props.column.field)+100)">Select</button>
+                                                        </span>
+                                                        <span v-else>
+                                                            <button type="button" class="btn btn-primary" v-on:click="checkTime(roomInfo.timeStart, parseInt(props.column.field)+100)">Rent</button>
+                                                        </span>
+                                                    </span>
+                                                    <span v-else> X </span>
                                                 </span>
-                                                <span v-else> {{ props.formattedRow[props.column.field] }} </span>
+                                                <span v-else> X </span>
                                             </template>
                                         </vue-good-table>
                                         <v-layout justify-end row1>
@@ -285,6 +301,7 @@ export default {
             selected: this.value,
             error_msg: '',
             fromSite: this.$router.params.fromSite,
+            roomOccupys: this.$router.params.roomOccupys,
             columns: [
                 {
                     label: "",
@@ -365,8 +382,11 @@ export default {
                 {
                     room: "RoomC2",
                 },
-            ]
+            ],
         }
+    },
+    mounted() {
+        console.log(this.roomOccupys)
     },
     methods: {
         submit () {
@@ -439,6 +459,8 @@ export default {
             else {
                 this.$router.replace('/home')
             }
+
+            console.log(this.roomOccupys)
         },
         setTimeStart(time, room) {
             this.roomInfo.timeStart = time
@@ -447,7 +469,30 @@ export default {
         setTimeEnd(time, room) {
             this.roomInfo.timeEnd = time
             this.roomInfo.roomType = room
-        }
+        },
+        checkTime(s, e) {
+            let legal = true
+            for (let time_i = parseInt(s); time_i <= parseInt(e); time_i += 100) {
+                if (!this.noOccupy(time_i)) {
+                    legal = false
+                    break
+                }
+            }
+            if (parseInt(s) > parseInt(e))
+                legal = false
+            if (legal) {
+                this.roomInfo.timeStart = s
+                this.roomInfo.timeEnd = e
+            }
+        },
+        noOccupy(d) {
+            for (let index = 0; index < this.roomOccupys.length; index++)
+            {
+                if (this.roomOccupys[index].date == this.roomInfo.date && this.roomOccupys[index].roomType + (this.roomOccupys[index].roomIndex).toString() === this.roomInfo.roomType && d >= this.roomOccupys[index].timeStart && d <= this.roomOccupys[index].timeEnd)
+                    return false
+            }
+            return true
+        },
     }
 }
 </script>
