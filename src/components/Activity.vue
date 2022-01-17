@@ -134,20 +134,24 @@ export default {
         },
         fetchRoomByActivityResponse(data) {
             this.roomsInfo = []
-            for (let index = 0; index < data.length; index++) {
-                let roomsInfo = {
-                    RUID: data[index].RUID,
-                    room: data[index].Room,
-                    theme: data[index].Theme,
-                    chairPerson: data[index].ChairPerson,
-                    invited: data[index].Invites,
-                    date: data[index].Date,
-                    timeStart: data[index].TimeStart,
-                    timeEnd: data[index].TimeEnd,
-                    agenda: data[index].Agenda,
-                    note: data[index].Note
+            console.log('let me see')
+            console.log(data)
+            if (data) {
+                for (let index = 0; index < data.length; index++) {
+                    let roomInfo = {
+                        RUID: data[index].RUID,
+                        room: data[index].Room,
+                        theme: data[index].Theme,
+                        chairPerson: data[index].ChairPerson,
+                        invited: data[index].Invites,
+                        date: data[index].Date,
+                        timeStart: data[index].TimeStart,
+                        timeEnd: data[index].TimeEnd,
+                        agenda: data[index].Agenda,
+                        note: data[index].Note
+                    }
+                    this.roomsInfo.push(roomInfo)
                 }
-                roomsInfo.push(roomsInfo)
             }
         },
         settingAction(action) {

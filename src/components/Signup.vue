@@ -108,7 +108,7 @@ export default {
             this.error_msg = '';
             if (state === '0') {
                 console.log('ok');
-                this.$router.replace('/home')
+                this.$router.replace('/login')
             }
             else if (state === '1') {
                 console.log('user\'s mail or account hasbeen reg');

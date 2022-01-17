@@ -143,7 +143,7 @@
                                             <template slot="table-row" slot-scope="props">
                                                 <span v-if="props.column.field !== 'room' && props.row.room === roomInfo.roomType">
                                                     <span v-if="noOccupy(props.column.field)">
-                                                        <span v-if="props.column.field >= roomInfo.timeStart && props.column.field < roomInfo.timeEnd">
+                                                        <span v-if="props.column.field >= roomInfo.timeStart && props.column.field <= roomInfo.timeEnd">
                                                             <button type="button" class="btn btn-primary" v-on:click="checkTime(roomInfo.timeStart, parseInt(props.column.field)+100)">Select</button>
                                                         </span>
                                                         <span v-else>

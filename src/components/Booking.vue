@@ -555,20 +555,23 @@ export default {
         },
         fetchRoomByDateIntervalResponse(data) {
             this.roomOccupys = []
-            for (let index = 0; index < data.length; index++)
-            {
-                let roomOccupy = {
-                    date: data[index].Date,
-                    user: data[index].User,
-                    room: data[index].Room,
-                    roomType: data[index].Room.replace('1','').replace('2','').replace('3',''),
-                    roomIndex: parseInt(data[index].Room.replace('Room','').replace('A','').replace('B','').replace('C','')),
-                    theme: data[index].Theme,
-                    timeStart: data[index].TimeStart,
-                    timeEnd: data[index].TimeEnd,
+            if (data) {
+                for (let index = 0; index < data.length; index++)
+                {
+                    let roomOccupy = {
+                        date: data[index].Date,
+                        user: data[index].ChairPerson,
+                        room: data[index].Room,
+                        roomType: data[index].Room.replace('1','').replace('2','').replace('3',''),
+                        roomIndex: parseInt(data[index].Room.replace('Room','').replace('A','').replace('B','').replace('C','')),
+                        theme: data[index].Theme,
+                        timeStart: data[index].TimeStart,
+                        timeEnd: data[index].TimeEnd,
+                    }
+                    this.roomOccupys.push(roomOccupy)
                 }
-                roomOccupys.push(roomOccupy)
             }
+            
             this.localChangeTime()
         },
         fillTime(s, e) {

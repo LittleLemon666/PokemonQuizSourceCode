@@ -32,7 +32,7 @@ export default {
       data () {
             return {
                   ws: null,
-                  serverUrl: "ws://localhost:8080/ws",
+                  serverUrl: "ws://140.118.127.110:8080/ws",
                   receiver_messages: [''],
                   sender_messages: '',
                   source_page: null
