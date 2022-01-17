@@ -88,6 +88,15 @@
                                             scrollable
                                             value="yyyy/MM/dd"
                                         >
+                                            <v-layout justify-end row1>
+                                                    <v-btn
+                                                        text
+                                                        color="primary"
+                                                        @click="$refs.menu_visible1.save(roomInfo.date)"
+                                                    >
+                                                        confirm
+                                                    </v-btn>
+                                            </v-layout>
                                         </v-date-picker>
                                     </v-card>
                                 </v-tab-item>
@@ -143,7 +152,7 @@
                                             <template slot="table-row" slot-scope="props">
                                                 <span v-if="props.column.field !== 'room' && props.row.room === roomInfo.roomType">
                                                     <span v-if="noOccupy(props.column.field)">
-                                                        <span v-if="props.column.field >= roomInfo.timeStart && props.column.field <= roomInfo.timeEnd">
+                                                        <span v-if="props.column.field >= roomInfo.timeStart && props.column.field < roomInfo.timeEnd">
                                                             <button type="button" class="btn btn-primary" v-on:click="checkTime(roomInfo.timeStart, parseInt(props.column.field)+100)">Select</button>
                                                         </span>
                                                         <span v-else>
@@ -167,6 +176,15 @@
                                             scrollable
                                             value="yyyy/MM/dd"
                                         >
+                                            <v-layout justify-end row1>
+                                                <v-btn
+                                                    text
+                                                    color="primary"
+                                                    @click="$refs.menu_visible2.save(roomInfo.date)"
+                                                >
+                                                    confirm
+                                                </v-btn>
+                                            </v-layout>
                                         </v-date-picker>
                                     </v-card>
                                 </v-tab-item>
@@ -481,8 +499,8 @@ export default {
             if (parseInt(s) > parseInt(e))
                 legal = false
             if (legal) {
-                this.roomInfo.timeStart = s
-                this.roomInfo.timeEnd = e
+                this.roomInfo.timeStart = s.toString()
+                this.roomInfo.timeEnd = e.toString()
             }
         },
         noOccupy(d) {
