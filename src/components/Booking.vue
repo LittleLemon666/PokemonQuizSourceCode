@@ -202,12 +202,12 @@
                     <v-card flat class="tt-container">
                         <vue-good-table :columns="columns" :rows="rows">
                             <template slot="table-row" slot-scope="props">
-                                <span v-if="props.column.field !== 'room' && noOccupy(props.column.field) &&  props.row.room === currentRoomType">
-                                    <span v-if="props.column.field == wantTime">
+                                <span v-if="props.column.field !== 'room' && noOccupy(props.column.field) && props.row.room === currentRoomType">
+                                    <span v-if="props.column.field == wantTime && wantRoom===props.row.room">
                                         Select
                                     </span>
                                     <span v-else>
-                                        <button type="button" class="btn btn-primary" v-on:click="wantTime=props.column.field">Rent</button>
+                                        <button type="button" class="btn btn-primary" v-on:click="wantTime=props.column.field; wantRoom=props.row.room">Rent</button>
                                     </span>
                                 </span>
                                 <span v-else> {{ props.formattedRow[props.column.field] }} </span>
@@ -215,7 +215,7 @@
                         </vue-good-table>
                         <v-layout justify-end row1>
                             <v-btn
-                                v-if="wantTime"
+                                v-if="wantTime && wantRoom===currentRoomType"
                                 text
                                 color="primary"
                                 @click="$refs.menuVisible.save(date); Rent()"
@@ -233,8 +233,9 @@
                             scrollable
                             value="yyyy/MM/dd"
                         >
-                            <v-layout justify-end row1>
+                            <v-layout justify-end row2>
                                 <v-btn
+                                    v-if="wantTime && wantRoom===currentRoomType"
                                     text
                                     color="primary"
                                     @click="$refs.menuVisible.save(date); Rent()"
@@ -450,6 +451,7 @@ export default {
             ],
             currentRoomType: '',
             wantTime: '',
+            wantRoom: '',
             roomOccupys: [
                 {
                     date: (new Date(Date.now() - (new Date()).getTimezoneOffset() * 60000)).toISOString().substr(0, 10),
