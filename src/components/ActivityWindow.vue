@@ -250,7 +250,7 @@
                         </template>
                         <v-card>
                             <v-card-title class="text-h5">Cancel?</v-card-title>
-                            <v-card-text>Are you sure you would like to cancel this appoiuntment?</v-card-text>
+                            <v-card-text>Are you sure you would like to cancel this appointment?</v-card-text>
                             <v-card-actions>
                             <v-spacer></v-spacer>
                             <v-btn

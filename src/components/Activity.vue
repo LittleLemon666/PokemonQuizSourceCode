@@ -38,8 +38,8 @@
                 <v-card flat color="light-blue lighten-5" class="ma-10" width="40%" height="40%">
                     <v-img
                         class="row-pointer"
-                        :alt=room.room
-                        :src="require('../assets/RoomPhotos/' + room.room + '.jpg')"
+                        :alt=room.roomType
+                        :src="require('../assets/RoomPhotos/' + room.roomType + '.jpg')"
                         max-height="100%"
                         max-width="100%"
                         contain
@@ -109,9 +109,9 @@ export default {
             }
             else if (this.sort_f === 'catagory') {
                 this.roomsInfo.sort((a,b) => {
-                    if (a.room < b.room)
+                    if (a.roomType < b.roomType)
                         return -1;
-                    else if (a.room > b.room)
+                    else if (a.roomType > b.roomType)
                         return 1;
                     else
                         return 0;
@@ -140,7 +140,7 @@ export default {
                 for (let index = 0; index < data.length; index++) {
                     let roomInfo = {
                         RUID: data[index].RUID,
-                        room: data[index].Room,
+                        roomType: data[index].Room,
                         theme: data[index].Theme,
                         chairPerson: data[index].ChairPerson,
                         invited: data[index].Invites,
