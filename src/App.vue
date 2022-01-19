@@ -132,9 +132,9 @@ export default {
             },
             Saving(sourcePage, roomInfo) {
                   this.source_page = sourcePage;
-                  let invites = roomInfo.emails.split(',');
+                  // let invites = roomInfo.emails.split(',');
                   console.log("send ");
-                  let json_sf = JSON.stringify({Type: 'EDITRBUID', Room: roomInfo.roomType, RUID: roomInfo.RUID, Theme: roomInfo.theme, Chairperson: roomInfo.chairperson, Date: roomInfo.date, TimeStart: roomInfo.timeStart, TimeEnd: roomInfo.timeEnd, Invites: invites, Agenda: roomInfo.agenda, Note: roomInfo.notes})
+                  let json_sf = JSON.stringify({Type: 'EDITRBUID', Room: roomInfo.roomType, RUID: roomInfo.RUID, Theme: roomInfo.theme, Chairperson: roomInfo.chairperson, Date: roomInfo.date, TimeStart: roomInfo.timeStart, TimeEnd: roomInfo.timeEnd, Invites: roomInfo.emails, Agenda: roomInfo.agenda, Note: roomInfo.notes})
                   console.log(json_sf);
                   if(this.ws.readyState === 1) {
                         this.ws.send(json_sf);
