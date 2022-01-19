@@ -153,10 +153,10 @@
                                                 <span v-if="props.column.field !== 'room' && props.row.room === roomInfo.roomType">
                                                     <span v-if="noOccupy(props.column.field)">
                                                         <span v-if="props.column.field >= roomInfo.timeStart && props.column.field < roomInfo.timeEnd">
-                                                            <button type="button" class="btn btn-primary" v-on:click="checkTime(roomInfo.timeStart, parseInt(props.column.field)+100)">Select</button>
+                                                            <button type="button" class="btn btn-primary" v-on:click="checkTime(roomInfo.timeStart, parseInt(props.column.field))">Select</button>
                                                         </span>
                                                         <span v-else>
-                                                            <button type="button" class="btn btn-primary" v-on:click="checkTime(roomInfo.timeStart, parseInt(props.column.field)+100)">Rent</button>
+                                                            <button type="button" class="btn btn-primary" v-on:click="checkTime(roomInfo.timeStart, parseInt(props.column.field))">Rent</button>
                                                         </span>
                                                     </span>
                                                     <span v-else> X </span>
@@ -403,9 +403,6 @@ export default {
             ],
         }
     },
-    mounted() {
-        console.log(this.roomOccupys)
-    },
     methods: {
         submit () {
             this.$emit('Reserve', this, this.roomInfo)
@@ -414,26 +411,20 @@ export default {
             this.$emit('Saving', this, this.roomInfo)
         },
         reserveResponse(state) {
-            console.log(state);
             this.error_msg = '';
             if (state === '0') {
-                console.log('ok');
                 this.$router.replace('/activity');
             }
             else if (state === '1') {
-                console.log('room hasbeen rent');
                 this.error_msg = 'room hasbeen rent';
             }
             else if (state === '2') {
-                console.log('room hasn\'t been released');
                 this.error_msg = 'room hasn\'t been released';
             }
             else if (state === '3') {
-                console.log('time or date can\'t be empty');
                 this.error_msg = 'time or date can\'t be empty';
             }
             else if (state === '5') {
-                console.log('U R NOT LOGIN');
                 this.$router.replace('/login');
             }
         },
@@ -443,7 +434,6 @@ export default {
         cancel () {
             if (this.fromSite === 'activity') {
                 this.dialog = false
-                console.log('cancel the meeting')
                 this.$emit('CancelRoom', this, this.roomInfo)
             }
             else {
@@ -453,16 +443,13 @@ export default {
         },
         cancelResponse(state) {
             if (state === '0') {
-                console.log('ok');
                 this.$activityWindowReturn = this.fromSite
                 this.$router.replace('/booking')
             }
             else if (state === '1') {
-                console.log('Cancel failed');
                 this.error_msg = 'Cancel failed';
             }
             else if (state === '87') {
-                console.log('U R NOT LOGIN');
                 this.$router.replace('/login');
             }
         },
@@ -477,8 +464,6 @@ export default {
             else {
                 this.$router.replace('/home')
             }
-
-            console.log(this.roomOccupys)
         },
         setTimeStart(time, room) {
             this.roomInfo.timeStart = time

@@ -148,7 +148,10 @@ export default {
         },
         settingAction(action){
             if (action === 'user'){
-                this.$router.params.fromSite = '';
+                let data = {
+                    fromSite: ''
+                };
+                this.$router.params = data;
                 this.$router.replace('signup').catch(()=>{})
                 this.web_at = 'Home'
             }

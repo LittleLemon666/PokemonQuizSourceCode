@@ -134,8 +134,6 @@ export default {
         },
         fetchRoomByActivityResponse(data) {
             this.roomsInfo = []
-            console.log('let me see')
-            console.log(data)
             if (data) {
                 for (let index = 0; index < data.length; index++) {
                     let roomInfo = {

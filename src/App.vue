@@ -60,7 +60,7 @@ export default {
                   for (let i = 0; i < data.length; i++) {
                         let msg = JSON.parse(data[i]);
                         this.receiver_messages.push(msg);
-                        console.log(msg);
+                        // console.log(msg);
                   }
 
                   for (let i = 0; i < data.length; i++) {
@@ -93,9 +93,9 @@ export default {
             },
             Login(sourcePage, userAccount, userPassword) {
                   this.source_page = sourcePage;
-                  console.log("send ");
+                  // console.log("send ");
                   let json_sf = JSON.stringify({Type: 'LOGIN', User: userAccount, Password: userPassword})
-                  console.log(json_sf);
+                  // console.log(json_sf);
                   if(this.ws.readyState === 1) {
                         this.ws.send(json_sf);
                   }
@@ -107,13 +107,13 @@ export default {
             },
             Save(sourcePage, userMail, account, firstName, secondName, password, fromSite) {
                   this.source_page = sourcePage;
-                  console.log("send ");
+                  // console.log("send ");
                   let json_sf = ''
                   if (fromSite === 'login')
                         json_sf = JSON.stringify({Type: 'REGISTER', UserMail: userMail, Account: account, FirstName: firstName, SecondName: secondName, Password: password})
                   else
                         json_sf = JSON.stringify({Type: 'USEREDIT', FirstName: firstName, SecondName: secondName, Password: password})
-                  console.log(json_sf);
+                  // console.log(json_sf);
                   if(this.ws.readyState === 1) {
                         this.ws.send(json_sf);
                   }
@@ -123,9 +123,9 @@ export default {
                   // let invites = []
                   // if (roomInfo.emails)
                   //       invites = roomInfo.emails.split(',');
-                  console.log("send ");
+                  // console.log("send ");
                   let json_sf = JSON.stringify({Type: 'RENTROOM', Room: roomInfo.roomType, Theme: roomInfo.theme, Chairperson: roomInfo.chairperson, Date: roomInfo.date, TimeStart: roomInfo.timeStart, TimeEnd: roomInfo.timeEnd, Invites: roomInfo.emails, Agenda: roomInfo.agenda, Note: roomInfo.notes})
-                  console.log(json_sf);
+                  // console.log(json_sf);
                   if(this.ws.readyState === 1) {
                         this.ws.send(json_sf);
                   }
@@ -133,45 +133,45 @@ export default {
             Saving(sourcePage, roomInfo) {
                   this.source_page = sourcePage;
                   // let invites = roomInfo.emails.split(',');
-                  console.log("send ");
+                  // console.log("send ");
                   let json_sf = JSON.stringify({Type: 'EDITRBUID', Room: roomInfo.roomType, RUID: roomInfo.RUID, Theme: roomInfo.theme, Chairperson: roomInfo.chairperson, Date: roomInfo.date, TimeStart: roomInfo.timeStart, TimeEnd: roomInfo.timeEnd, Invites: roomInfo.emails, Agenda: roomInfo.agenda, Note: roomInfo.notes})
-                  console.log(json_sf);
+                  // console.log(json_sf);
                   if(this.ws.readyState === 1) {
                         this.ws.send(json_sf);
                   }
             },
             FetchRoomByDateInterval(sourcePage, dateBegin, dateEnd) {
                   this.source_page = sourcePage;
-                  console.log("send ");
+                  // console.log("send ");
                   let json_sf = JSON.stringify({Type: 'FETCHRDI', DateBegin: dateBegin, DateEnd: dateEnd})
-                  console.log(json_sf);
+                  // console.log(json_sf);
                   if(this.ws.readyState === 1) {
                         this.ws.send(json_sf);
                   }
             },
             CancelRoom(sourcePage, roomInfo) {
                   this.source_page = sourcePage;
-                  console.log("send ");
+                  // console.log("send ");
                   let json_sf = JSON.stringify({Type: 'CANCELRBUID', RUID: roomInfo.RUID})
-                  console.log(json_sf);
+                  // console.log(json_sf);
                   if(this.ws.readyState === 1) {
                         this.ws.send(json_sf);
                   }
             },
             fetchRoomByActivity(sourcePage) {
                   this.source_page = sourcePage;
-                  console.log("send ");
+                  // console.log("send ");
                   let json_sf = JSON.stringify({Type: 'FETCHRAC', DateAfter: (new Date(Date.now() - (new Date()).getTimezoneOffset() * 60000)).toISOString().substr(0, 10)})
-                  console.log(json_sf);
+                  // console.log(json_sf);
                   if(this.ws.readyState === 1) {
                         this.ws.send(json_sf);
                   }
             },
             sendMessage(d) {
                   this.sender_messages = d;
-                  console.log("send ");
-                  console.log(d);
-                  console.log(JSON.stringify({Type: this.sender_messages}));
+                  // console.log("send ");
+                  // console.log(d);
+                  // console.log(JSON.stringify({Type: this.sender_messages}));
                   if(this.ws.readyState === 1 && this.sender_messages !== "") {
                         this.ws.send(JSON.stringify({Type: this.sender_messages}));
                         this.sender_messages = "";

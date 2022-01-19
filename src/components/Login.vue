@@ -81,10 +81,8 @@ export default {
             // this.connect('ws://' + location.host + '/socket/websocket/030', { format: 'json' })
         },
         loginResponse(state, firstName, lastName, email) {
-            console.log(state);
             this.error_msg = '';
             if (state === '0') {
-                console.log('ok');
                 this.$userName = this.account.username;
                 this.$firstName = firstName;
                 this.$lastName = lastName;
@@ -92,15 +90,12 @@ export default {
                 this.$router.replace('/home');
             }
             else if (state === '1') {
-                console.log('wrong password');
                 this.error_msg = 'wrong password';
             }
             else if (state === '2') {
-                console.log('didn\'t find account');
                 this.error_msg = 'didn\'t find account';
             }
             else if (state === '3') {
-                console.log('hasbeeb loggin');
                 this.$router.replace('/home');
             }
         },

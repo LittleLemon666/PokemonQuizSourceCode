@@ -497,7 +497,6 @@ export default {
             }
         },
         Rent () {
-            console.log(this.$userName)
             this.timeEnd = (parseInt(this.wantTime) + 100).toString()
             if (this.timeEnd.length == 3)
                 this.timeEnd = '0' + this.timeEnd

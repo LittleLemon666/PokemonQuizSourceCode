@@ -97,6 +97,12 @@ export default {
             error_msg: ''
         }
     },
+    mounted() {
+        this.firstName = this.$firstName
+        this.secondName = this.$lastName
+        this.account = this.$userName
+        this.userMail = this.$email
+    },
     methods: {
         save() {
             this.$emit('Save', this, this.userMail, this.account, this.firstName, this.secondName, this.password, this.fromSite)
@@ -104,62 +110,49 @@ export default {
             // this.connect('ws://' + location.host + '/socket/websocket/030', { format: 'json' })
         },
         saveResponse(state) {
-            console.log(state);
+            // console.log(state);
             this.error_msg = '';
             if (state === '0') {
-                console.log('ok');
                 this.$router.replace('/login')
             }
             else if (state === '1') {
-                console.log('user\'s mail or account hasbeen reg');
                 this.error_msg = 'user\'s mail or account hasbeen reg';
             }
             else if (state === '2') {
-                console.log('name can\'t be empty');
                 this.error_msg = 'name can\'t be empty';
             }
             else if (state === '3') {
-                console.log('passward can\'t be empty');
                 this.error_msg = 'passward can\'t be empty';
             }
             else if (state === '4') {
-                console.log('not a mail');
                 this.error_msg = 'not a mail';
             }
             else if (state === '5') {
-                console.log('something 2 long');
                 this.error_msg = 'something 2 long';
             }
         },
         editResponse(state) {
-            console.log(state);
+            // console.log(state);
             this.error_msg = '';
             if (state === '0') {
-                console.log('ok');
                 this.$router.replace('/home')
             }
             else if (state === '1') {
-                console.log('user\'s account hasbeen reg');
                 this.error_msg = 'user\'s account hasbeen reg';
             }
             else if (state === '2') {
-                console.log('name can\'t be empty');
                 this.error_msg = 'name can\'t be empty';
             }
             else if (state === '3') {
-                console.log('passward can\'t be empty');
                 this.error_msg = 'passward can\'t be empty';
             }
             else if (state === '4') {
-                console.log('not a mail');
                 this.error_msg = 'not a mail';
             }
             else if (state === '5') {
-                console.log('something 2 long');
                 this.error_msg = 'something 2 long';
             }
             else if (state === '87') {
-                console.log('U R NOT LOGIN ==');
                 this.error_msg = 'U R NOT LOGIN ==';
             }
         }
