@@ -11,9 +11,8 @@
                 contain
                 @click="HomeLogo"
             ></v-img>
+            <v-row>
             <v-col max-width="40%">
-            </v-col>
-            <v-col>
                 <v-card flat color="light-blue lighten-5">
                     <v-row>
                         <v-col v-show="web_at!=='Home'">
@@ -100,6 +99,7 @@
                     </v-row>
                 </v-card>
             </v-col>
+            </v-row>
         </v-app-bar>
 
         <v-main>
