@@ -1,6 +1,6 @@
-# vrra_vue2
+# 寶可夢測驗
 
-> a demo for SW
+> a demo for pokemon test
 
 ## Build Setup
 
