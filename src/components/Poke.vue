@@ -1,10 +1,9 @@
 <template>
-<!--背景圖-->
 <v-app>
     <div class="box">
         <v-layout>
         <div class="counter">
-            <h1 class="text-center" style="color:green">{{parseInt(time/60)}}:{{(time%60).toString().padStart(2,0)}}</h1>
+            <h1 class="text-center" style="color:green"> {{ parseInt(time/60) }}:{{ (time%60).toString().padStart(2,0) }} </h1>
             <a @click="giveup">放棄?</a>
         </div>
         <div class="pokeInfo">
@@ -29,7 +28,7 @@
                                 <span v-if="isGiveup && column==='Pokémon' && !item.flag" style="color:red">
                                     {{item[column]}}
                                 </span>
-                                <span v-else-if="item.flag || column==='No.'">
+                                <span v-else-if="item.flag || column==='No.' || column==='Type'">
                                     {{item[column]}}
                                 </span>
                             </td>
@@ -50,7 +49,7 @@
                                 <span v-if="isGiveup && column==='Pokémon' && !item.flag" style="color:red">
                                     {{item[column]}}
                                 </span>
-                                <span v-else-if="item.flag || column==='No.'">
+                                <span v-else-if="item.flag || column==='No.' || column==='Type'">
                                     {{item[column]}}
                                 </span>
                             </td>
@@ -71,49 +70,7 @@
                                 <span v-if="isGiveup && column==='Pokémon' && !item.flag" style="color:red">
                                     {{item[column]}}
                                 </span>
-                                <span v-else-if="item.flag || column==='No.'">
-                                    {{item[column]}}
-                                </span>
-                            </td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
-            <div class="pokemonTable">
-                <table class="pokemonTable">
-                    <thead>
-                        <tr>
-                            <th class="gx" v-for="(column, index) in columns" :key="index" style="color:#eee; background:#3366cc"> {{column}}</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr v-for="(item, index) in pokemonsData4" :key="index">
-                            <td class="gx" v-for="(column, indexColumn) in columns" :key="indexColumn">
-                                <span v-if="isGiveup && column==='Pokémon' && !item.flag" style="color:red">
-                                    {{item[column]}}
-                                </span>
-                                <span v-else-if="item.flag || column==='No.'">
-                                    {{item[column]}}
-                                </span>
-                            </td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
-            <div class="pokemonTable">
-                <table class="pokemonTable">
-                    <thead>
-                        <tr>
-                            <th class="gx" v-for="(column, index) in columns" :key="index" style="color:#eee; background:#3366cc"> {{column}}</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr v-for="(item, index) in pokemonsData5" :key="index">
-                            <td class="gx" v-for="(column, indexColumn) in columns" :key="indexColumn">
-                                <span v-if="isGiveup && column==='Pokémon' && !item.flag" style="color:red">
-                                    {{item[column]}}
-                                </span>
-                                <span v-else-if="item.flag || column==='No.'">
+                                <span v-else-if="item.flag || column==='No.' || column==='Type'">
                                     {{item[column]}}
                                 </span>
                             </td>
@@ -128,17 +85,16 @@
 </template>
 
 <script>
-import pokemonList from '../pokemonList.json'
+// import pokemonList from '../pokemonList.json'
+import pokemonList from '../pokemonTypeList.json'
 export default {
     data() {
         return {
-            columns: ["No.", "Pokémon"],
+            columns: ["No.", "Type", "Pokémon"],
             pokemonsData: pokemonList,
-            pokemonsData1: pokemonList.slice(0,181),
-            pokemonsData2: pokemonList.slice(181,362),
-            pokemonsData3: pokemonList.slice(362,543),
-            pokemonsData4: pokemonList.slice(543,724),
-            pokemonsData5: pokemonList.slice(724),
+            pokemonsData1: pokemonList.slice(0,302),
+            pokemonsData2: pokemonList.slice(302,604),
+            pokemonsData3: pokemonList.slice(604),
             pokemonGuess: '',
             count: 0,
             timer: null,
@@ -150,7 +106,7 @@ export default {
     mounted: function() {
         for (var i = 0; i < this.pokemonsData.length; i++)
             this.pokemonsData[i].flag = false
-        this.timer=setInterval(this.countdown, 1000)
+        this.timer = setInterval(this.countdown, 1000)
     },
     methods: {
         countdown() {
@@ -161,7 +117,7 @@ export default {
         },
         search() {
             let pokeIndex = this.pokemonsData.findIndex(x => x.Pokémon === this.pokemonGuess)
-            if (pokeIndex !== -1) {
+            if (pokeIndex !== -1 && !this.pokemonsData[pokeIndex].flag) {
                 this.pokemonsData[pokeIndex].flag = true
                 this.pokemonGuess = ''
                 this.count++
@@ -173,7 +129,6 @@ export default {
     }
 }</script>
 
-// width: 100px;
 <style>
 .pokeInfo {
     text-align: left;
