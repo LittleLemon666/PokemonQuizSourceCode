@@ -7,9 +7,9 @@
             <a @click="giveup">放棄?</a>
         </div>
         <div class="pokeInfo">
-            <span>輸入所有905隻寶可夢的名字!</span>
+            <span>輸入所有1008隻寶可夢的名字!</span>
             <el-input type = "text" v-model = "pokemonGuess" auto-complete = "off" placeholder = "寶可夢名字" @change="search" @input="search"></el-input>
-            <span>猜對{{count}} / 905</span>
+            <span>猜對{{count}} / 1008</span>
         </div>
         </v-layout>
     </div>
@@ -92,9 +92,9 @@ export default {
         return {
             columns: ["No.", "Type", "Pokémon"],
             pokemonsData: pokemonList,
-            pokemonsData1: pokemonList.slice(0,302),
-            pokemonsData2: pokemonList.slice(302,604),
-            pokemonsData3: pokemonList.slice(604),
+            pokemonsData1: pokemonList.slice(0,336),
+            pokemonsData2: pokemonList.slice(336,672),
+            pokemonsData3: pokemonList.slice(672),
             pokemonGuess: '',
             count: 0,
             timer: null,

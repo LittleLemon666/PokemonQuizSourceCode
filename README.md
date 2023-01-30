@@ -1,6 +1,7 @@
 # 寶可夢測驗
 
 > a demo for pokemon test
+> link https://littlelemon666.github.io/PokemonQuiz/
 
 ## Build Setup
 
